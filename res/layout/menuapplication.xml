@@ -28,27 +28,11 @@
         android:text="Contactos" />
 
     <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="174dp"
-        android:layout_y="147dp"
-        android:text="Ayuda" />
-
-    <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_x="102dp"
         android:layout_y="239dp"
         android:text="Avisos de la Universidad" />
-
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="116dp"
-        android:layout_y="321dp"
-        android:text="Cerrar sesion" />
 
 </AbsoluteLayout>
