@@ -30,9 +30,7 @@ import android.widget.TextView;
 
 public class AndroidLogin extends Activity implements OnClickListener {
 	
-	String Kardex=null;
-    String Informacion_Academica=null;	
-	Button ok,back,exit;
+	Button ok;
 	TextView result;
 	String urlLogin="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004.oIniSesWebLic?mod=1";
 	
@@ -50,8 +48,9 @@ public class AndroidLogin extends Activity implements OnClickListener {
         
     }
     
+    
     public void postLoginData() {
-    	HttpResponse responsePost = null;
+    	HttpResponse response = null;
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
         
@@ -83,7 +82,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
 
             // Execute HTTP Post Request
             Log.w("SENCIDE", "Execute HTTP Post Request");
-            HttpResponse response = httpclient.execute(httppost);
+            response = httpclient.execute(httppost);
             
             String str = inputStreamToString(response.getEntity().getContent()).toString();
             //Filtramos el atributo onload que nos da la valdiacion del formulario
