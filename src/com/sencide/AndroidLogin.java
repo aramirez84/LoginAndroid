@@ -9,17 +9,22 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +38,8 @@ public class AndroidLogin extends Activity implements OnClickListener {
 	Button ok;
 	TextView result;
 	String urlLogin="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004.oIniSesWebLic?mod=1";
+    String Kardex=null;
+    String Informacion_Academica=null;
 	
     /** Called when the activity is first created. */
     @Override
@@ -116,7 +123,78 @@ public class AndroidLogin extends Activity implements OnClickListener {
         } catch (IOException e) {
         	e.printStackTrace();
         }
-        //Header[] cookies = responsePost.getHeaders("Set-Cookie");
+        
+        HttpResponse responsePost = null;
+        try {
+            responsePost = httpclient.execute(httppost);
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Header[] cookies = responsePost.getHeaders("Set-Cookie");
+        
+        HttpGet httpget = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC020.oConsulta");
+
+        HttpGet httpget2 = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC007.oConsulta");
+
+        for (Header c : cookies) {
+                httpget.addHeader("Cookie", c.getValue());
+        }
+
+        for (Header c : cookies) {
+            httpget2.addHeader("Cookie", c.getValue());
+        }
+        
+        HttpResponse responseGet = null;
+        try {
+                responseGet = httpclient.execute(httpget);
+        } catch (ClientProtocolException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+        } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+        }
+        HttpEntity ent=responseGet.getEntity();
+
+        try {
+                Kardex=EntityUtils.toString(ent);
+        } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+        } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+        }
+        System.out.println(Kardex);
+        
+        try {
+            responseGet = httpclient.execute(httpget2);
+	    } catch (ClientProtocolException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	    } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	    }
+	    ent=responseGet.getEntity();
+	
+	    try {
+	            Informacion_Academica=EntityUtils.toString(ent);
+	    } catch (ParseException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	    } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	    }
+	    
+        System.out.println(Informacion_Academica);
+        
+        httpclient.getConnectionManager().shutdown();
     } 
   
     private StringBuilder inputStreamToString(InputStream is) {
