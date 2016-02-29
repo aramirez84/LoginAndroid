@@ -94,28 +94,26 @@ public class AndroidLogin extends Activity implements OnClickListener {
             String str = inputStreamToString(response.getEntity().getContent()).toString();
             //Filtramos el atributo onload que nos da la valdiacion del formulario
             Pattern pattern = Pattern.compile("(\\(.*?)\\)");
-            Matcher matcher = pattern.matcher(str);
-            // Guardamos los mensajes que nos da en la variable mensaje
-            List<String> mensajes = new ArrayList<String>();
-            while(matcher.find()){
-            	mensajes.add(matcher.group(0));
-            	//Log.w("ALERTA",mensaje);
-            }
+            List<String> mensajes=getMensaje(pattern, str);
+            //Hacemos un segundo filto para obtener solo el mensaje de validacion del formualrio
+            Pattern pattern2 = Pattern.compile("[A-Z].*[a-z]");
+            List<String> mensajes2=getMensaje(pattern2, mensajes.get(1));
             
-            Log.w("ALERTA",mensajes.get(1));
-            
+            Log.w("ALERTA",mensajes2.toString());
             Log.w("SENCIDE", str);
             
             if(mensajes.size()==2)
             {
+            	Header[] cookies = getCookies(httppost, httpclient);
             	Log.w("SENCIDE", "TRUE");
             	result.setText("Login successful");
             	Intent intent = new Intent(AndroidLogin.this, MenuApplication.class);
+            	intent.putExtra("cookie", cookies);
             	startActivity(intent);
             }else
             {
             	Log.w("SENCIDE", "FALSE");
-            	result.setText(mensajes.get(1));            	
+            	result.setText(mensajes2.toString());            	
             }
 
         } catch (ClientProtocolException e) {
@@ -219,6 +217,33 @@ public class AndroidLogin extends Activity implements OnClickListener {
 		if(view == ok){
 			postLoginData();
 		}
+	}
+	
+	public List<String> getMensaje(Pattern pattern,String str)
+	{
+		Matcher matcher = pattern.matcher(str);
+        // Guardamos los mensajes que nos da en la variable mensaje
+        List<String> mensajes = new ArrayList<String>();
+        while(matcher.find()){
+        	mensajes.add(matcher.group(0));
+        }
+		return mensajes;
+	}
+	
+	public Header[] getCookies(HttpPost httppost,HttpClient httpclient)
+	{
+		HttpResponse responsePost = null;
+        try {
+            responsePost = httpclient.execute(httppost);
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Header[] cookies = responsePost.getHeaders("Set-Cookie");
+        return cookies;
 	}
 
 }
