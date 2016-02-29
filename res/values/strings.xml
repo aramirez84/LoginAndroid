@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AndroidLogin</string>
+    <!-- Text button in login form -->
     <string name="user">User Name</string>
     <string name="password">Password</string>
+    <string name="btnLogin">Login</string>
+    
+    <!-- Options hide menu -->
     <string name="help">Ayuda</string>
     <string name="logout">Logout</string>
-    <string name="btnLogin">Login</string>
+    
+    <!-- Option main menu-->
+    <string name="horario">Horario</string>
+    <string name="biblioteca">Biblioteca</string>
+    <string name="contactos">Contactos</string>
+    <string name="avisos">Avisos de la Universidad</string>
+    
+    <!-- Decription for images -->
+    <string name="desc">arrow_right</string>
 </resources>
