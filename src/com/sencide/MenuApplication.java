@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
+
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -17,12 +20,15 @@ import android.view.MenuItem;
 
 public class MenuApplication extends Activity{
 	private String urlFinSession="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU005.oFinSesion";
+	private List<String> cookies;
 	@Override
     public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.menuapplication);
         Bundle bundle = getIntent().getExtras();
+        cookies=bundle.getStringArrayList("cookies");
+        Log.w("cookies", cookies.toString());
      }
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
