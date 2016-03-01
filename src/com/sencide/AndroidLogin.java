@@ -92,7 +92,6 @@ public class AndroidLogin extends Activity implements OnClickListener {
             // Execute HTTP Post Request
             Log.w("SENCIDE", "Execute HTTP Post Request");
             response = httpclient.execute(httppost);
-            
             String str = inputStreamToString(response.getEntity().getContent()).toString();
             //Filtramos el atributo onload que nos da la valdiacion del formulario
             Pattern pattern = Pattern.compile("(\\(.*?)\\)");
@@ -107,7 +106,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
             if(mensajes.size()==2)
             {
             	String url="https://ayamictlan.uam.mx:8443/sae/azc/IEWBC020.oConsulta";
-            	cookies = getCookies(httppost, httpclient,url);
+            	cookies = getCookies(response);
             	Log.w("SENCIDE", "TRUE");
             	result.setText("Login successful");
             	Intent intent = new Intent(AndroidLogin.this, MenuApplication.class);
@@ -124,7 +123,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
         } catch (IOException e) {
         	e.printStackTrace();
         }
-        
+        /*
         HttpResponse responsePost = null;
         try {
             responsePost = httpclient.execute(httppost);
@@ -137,7 +136,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
         }
         Header[] cookies = responsePost.getHeaders("Set-Cookie");
         
-        /*HttpGet httpget = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC020.oConsulta");
+        HttpGet httpget = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC020.oConsulta");
 
         HttpGet httpget2 = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC007.oConsulta");
 
@@ -223,6 +222,12 @@ public class AndroidLogin extends Activity implements OnClickListener {
 		}
 	}
 	
+	/*
+	 * Metodo para filtrar contenido
+	 * @arametros
+	 * pattern .- Expresion regular para quitar texto no deseado
+	 * str.- Texto que va a ser filtrado con la esprexion regular
+	 */
 	public List<String> getMensaje(Pattern pattern,String str)
 	{
 		Matcher matcher = pattern.matcher(str);
@@ -234,19 +239,9 @@ public class AndroidLogin extends Activity implements OnClickListener {
 		return mensajes;
 	}
 	
-	public List<String> getCookies(HttpPost httppost,HttpClient httpclient,String url)
+	public List<String> getCookies(HttpResponse response)
 	{
-		HttpResponse responsePost = null;
-        try {
-            responsePost = httpclient.execute(httppost);
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        Header[] headers = responsePost.getHeaders("Set-Cookie");
+		Header[] headers = response.getHeaders("Set-Cookie");
         List<String> cookies = new ArrayList<String>();
         for (Header c : headers) {
         	cookies.add(c.getValue());
