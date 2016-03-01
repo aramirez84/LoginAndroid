@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -35,11 +36,12 @@ import android.widget.TextView;
 
 public class AndroidLogin extends Activity implements OnClickListener {
 	
-	Button ok;
-	TextView result;
-	String urlLogin="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004.oIniSesWebLic?mod=1";
-    String Kardex=null;
-    String Informacion_Academica=null;
+	private Button ok;
+	private TextView result;
+	private String urlLogin="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004.oIniSesWebLic?mod=1";
+	private String Kardex=null;
+	private String Informacion_Academica=null;
+	private List<String> cookies;
 	
     /** Called when the activity is first created. */
     @Override
@@ -100,15 +102,16 @@ public class AndroidLogin extends Activity implements OnClickListener {
             List<String> mensajes2=getMensaje(pattern2, mensajes.get(1));
             
             Log.w("ALERTA",mensajes2.toString());
-            Log.w("SENCIDE", str);
+            //Log.w("SENCIDE", str);
             
             if(mensajes.size()==2)
             {
-            	Header[] cookies = getCookies(httppost, httpclient);
+            	String url="https://ayamictlan.uam.mx:8443/sae/azc/IEWBC020.oConsulta";
+            	cookies = getCookies(httppost, httpclient,url);
             	Log.w("SENCIDE", "TRUE");
             	result.setText("Login successful");
             	Intent intent = new Intent(AndroidLogin.this, MenuApplication.class);
-            	intent.putExtra("cookie", cookies);
+            	intent.putStringArrayListExtra("cookies", (ArrayList<String>) cookies);
             	startActivity(intent);
             }else
             {
@@ -134,7 +137,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
         }
         Header[] cookies = responsePost.getHeaders("Set-Cookie");
         
-        HttpGet httpget = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC020.oConsulta");
+        /*HttpGet httpget = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC020.oConsulta");
 
         HttpGet httpget2 = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC007.oConsulta");
 
@@ -167,7 +170,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
         }
-        System.out.println(Kardex);
+        //System.out.println(Kardex);
         
         try {
             responseGet = httpclient.execute(httpget2);
@@ -190,9 +193,10 @@ public class AndroidLogin extends Activity implements OnClickListener {
 	            e.printStackTrace();
 	    }
 	    
-        System.out.println(Informacion_Academica);
+        //System.out.println(Informacion_Academica);
         
         httpclient.getConnectionManager().shutdown();
+        */
     } 
   
     private StringBuilder inputStreamToString(InputStream is) {
@@ -230,7 +234,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
 		return mensajes;
 	}
 	
-	public Header[] getCookies(HttpPost httppost,HttpClient httpclient)
+	public List<String> getCookies(HttpPost httppost,HttpClient httpclient,String url)
 	{
 		HttpResponse responsePost = null;
         try {
@@ -242,7 +246,11 @@ public class AndroidLogin extends Activity implements OnClickListener {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        Header[] cookies = responsePost.getHeaders("Set-Cookie");
+        Header[] headers = responsePost.getHeaders("Set-Cookie");
+        List<String> cookies = new ArrayList<String>();
+        for (Header c : headers) {
+        	cookies.add(c.getValue());
+        }
         return cookies;
 	}
 
