@@ -94,6 +94,7 @@ public class MenuApplication extends Activity{
 		int id = item.getItemId();
 		if (id == R.id.action_logout) {
 			postLoginData();
+			finish();
 			//return true;
 		}
 		if (id == R.id.action_help) {

@@ -112,6 +112,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
             	Intent intent = new Intent(AndroidLogin.this, MenuApplication.class);
             	intent.putStringArrayListExtra("cookies", (ArrayList<String>) cookies);
             	startActivity(intent);
+            	finish();
             }else
             {
             	Log.w("SENCIDE", "FALSE");
