@@ -21,11 +21,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
-public class MenuApplication extends Activity{
+public class MenuApplication extends Activity implements OnClickListener{
 	private String urlFinSession="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU005.oFinSesion";
 	private String urlKardex="https://ayamictlan.uam.mx:8443/sae/azc/IEWBC020.oConsulta";
 	private List<String> cookies;
+	private Button horario,biblioteca,avisos,contactos;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState)
 	{
@@ -33,7 +38,15 @@ public class MenuApplication extends Activity{
         setContentView(R.layout.menuapplication);
         Bundle bundle = getIntent().getExtras();
         cookies=bundle.getStringArrayList("cookies");
-        Log.w("cookies", cookies.toString());
+        horario = (Button)findViewById(R.id.btn_horario);
+        biblioteca=(Button)findViewById(R.id.btn_biblioteca);
+        avisos=(Button)findViewById(R.id.btn_avisos);
+        contactos=(Button)findViewById(R.id.btn_contactos);
+        horario.setOnClickListener(this);
+        biblioteca.setOnClickListener(this);
+        avisos.setOnClickListener(this);
+        contactos.setOnClickListener(this);
+        
      }
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,6 +114,13 @@ public class MenuApplication extends Activity{
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public void onClick(View view) {
+		if(view == horario){
+			postLoginData();
+		}
 	}
 	
 	public HttpGet cerrarSession(List<String> cookies,HttpGet httpget)
