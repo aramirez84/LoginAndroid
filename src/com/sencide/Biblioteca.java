@@ -7,16 +7,19 @@ import android.view.MenuItem;
 import android.widget.TableLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Principal extends Activity
 {
+	private List<String> cookies;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabla_horario);
-
+        Bundle bundle = getIntent().getExtras();
+        cookies=bundle.getStringArrayList("cookies");
         Tabla tabla = new Tabla(this, (TableLayout)findViewById(R.id.tabla));
         tabla.agregarCabecera(R.array.cabecera_tabla);
         for(int i = 0; i < 15; i++)
