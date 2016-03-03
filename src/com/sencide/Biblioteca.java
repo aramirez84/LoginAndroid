@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Principal extends Activity
+public class Biblioteca extends Activity
 {
 	private List<String> cookies;
     @Override
