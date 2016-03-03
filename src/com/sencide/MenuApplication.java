@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.Header;
@@ -17,6 +18,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -119,7 +121,10 @@ public class MenuApplication extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View view) {
 		if(view == horario){
-			postLoginData();
+			Intent intent = new Intent(MenuApplication.this, Biblioteca.class);
+        	intent.putStringArrayListExtra("cookies", (ArrayList<String>) cookies);
+        	startActivity(intent);
+        	//postLoginData();
 		}
 	}
 	
