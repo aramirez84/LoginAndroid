@@ -105,7 +105,6 @@ public class AndroidLogin extends Activity implements OnClickListener {
             
             if(mensajes.size()==2)
             {
-            	String url="https://ayamictlan.uam.mx:8443/sae/azc/IEWBC020.oConsulta";
             	cookies = getCookies(response);
             	Log.w("SENCIDE", "TRUE");
             	result.setText("Login successful");
