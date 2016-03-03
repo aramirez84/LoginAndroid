@@ -7,34 +7,34 @@
 
     <Button
         android:id="@+id/btn_horario"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_x="50dp"
-        android:layout_y="51dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
         android:text="@string/horario" />
 
     <Button
         android:id="@+id/btn_biblioteca"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_x="177dp"
-        android:layout_y="55dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
         android:text="@string/biblioteca" />
 
     <Button
         android:id="@+id/btn_contactos"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_x="58dp"
-        android:layout_y="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
         android:text="@string/contactos" />
 
     <Button
         android:id="@+id/btn_avisos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="102dp"
-        android:layout_y="239dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
         android:text="@string/avisos" />
 
 </LinearLayout>
