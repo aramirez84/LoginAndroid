@@ -6,35 +6,35 @@
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btn_horario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_x="50dp"
         android:layout_y="51dp"
-        android:text="Horario" />
+        android:text="@string/horario" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_biblioteca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_x="177dp"
         android:layout_y="55dp"
-        android:text="Biblioteca" />
+        android:text="@string/biblioteca" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_contactos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_x="58dp"
         android:layout_y="150dp"
-        android:text="Contactos" />
+        android:text="@string/contactos" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btn_avisos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_x="102dp"
         android:layout_y="239dp"
-        android:text="Avisos de la Universidad" />
+        android:text="@string/avisos" />
 
 </LinearLayout>

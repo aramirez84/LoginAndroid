@@ -18,4 +18,7 @@
     
     <!-- Decription for images -->
     <string name="desc">arrow_right</string>
+    <string name="texto">Ejemplo de una tabla en Android</string>
+    <string name="action_settings">Settings</string>
+    
 </resources>
