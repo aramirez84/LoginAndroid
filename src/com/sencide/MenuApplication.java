@@ -29,7 +29,6 @@ import android.widget.Button;
 
 public class MenuApplication extends Activity implements OnClickListener{
 	private String urlFinSession="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU005.oFinSesion";
-	private String urlKardex="https://ayamictlan.uam.mx:8443/sae/azc/IEWBC020.oConsulta";
 	private List<String> cookies;
 	private Button horario,biblioteca,avisos,contactos;
 	
@@ -57,14 +56,14 @@ public class MenuApplication extends Activity implements OnClickListener{
 		return true;
 	}
 	
-	public void postLoginData() {
+	public void cerrarSession() {
     	HttpResponse response = null;
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
         
         
-        HttpGet httpget = new HttpGet(urlKardex);
-        httpget=cerrarSession(cookies,httpget);
+        HttpGet httpget = new HttpGet(urlFinSession);
+        httpget=getCookies(cookies,httpget);
 
         try {
         	   	
@@ -108,7 +107,7 @@ public class MenuApplication extends Activity implements OnClickListener{
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_logout) {
-			postLoginData();
+			cerrarSession();
 			finish();
 			//return true;
 		}
@@ -121,14 +120,13 @@ public class MenuApplication extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View view) {
 		if(view == horario){
-			Intent intent = new Intent(MenuApplication.this, Biblioteca.class);
+			Intent intent = new Intent(MenuApplication.this, Horario.class);
         	intent.putStringArrayListExtra("cookies", (ArrayList<String>) cookies);
         	startActivity(intent);
-        	//postLoginData();
 		}
 	}
 	
-	public HttpGet cerrarSession(List<String> cookies,HttpGet httpget)
+	public HttpGet getCookies(List<String> cookies,HttpGet httpget)
 	{
 		for (int i=0;i<cookies.size();i++)
 		{

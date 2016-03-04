@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal">
+    <TextView
+        android:id="@+id/horario"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
 
     <LinearLayout
         android:orientation="vertical"
