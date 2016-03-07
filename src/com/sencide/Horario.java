@@ -33,7 +33,7 @@ public class Horario extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tabla_horario);
+        setContentView(R.layout.horario);
         Bundle bundle = getIntent().getExtras();
         cookies=bundle.getStringArrayList("cookies");
         horario = (TextView)findViewById(R.id.horario);
@@ -53,16 +53,6 @@ public class Horario extends Activity
         }
     }
     
-    public HttpGet getCookies(List<String> cookies,HttpGet httpget)
-	{
-		for (int i=0;i<cookies.size();i++)
-		{
-			Log.w("cookies add", cookies.get(i));
-			httpget.addHeader("Cookie", cookies.get(i));
-		}
-		return httpget;
-	}
-    
     public String getHorario()
     {
     	String strHorario = null;
@@ -72,7 +62,7 @@ public class Horario extends Activity
         
         
         HttpGet httpget = new HttpGet(urlHorario);
-        httpget=getCookies(cookies,httpget);
+        httpget=setCookies(cookies,httpget);
 
         try {
         	   	
@@ -91,5 +81,15 @@ public class Horario extends Activity
         }
 		return strHorario;   
     } 
+    public HttpGet setCookies(List<String> cookies,HttpGet httpget)
+	{
+		for (int i=0;i<cookies.size();i++)
+		{
+			Log.w("cookies Horario", cookies.get(i));
+			httpget.addHeader("Cookie", cookies.get(i));
+		}
+		return httpget;
+	}
+    
 
 }
