@@ -63,7 +63,7 @@ public class MenuApplication extends Activity implements OnClickListener{
         
         
         HttpGet httpget = new HttpGet(urlFinSession);
-        httpget=getCookies(cookies,httpget);
+        httpget=setCookies(cookies,httpget);
 
         try {
         	   	
@@ -83,35 +83,17 @@ public class MenuApplication extends Activity implements OnClickListener{
         
     } 
   
-    private StringBuilder inputStreamToString(InputStream is) {
-    	String line = "";
-    	StringBuilder total = new StringBuilder();
-    	// Wrap a BufferedReader around the InputStream
-    	BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-    	// Read response until the end
-    	try {
-			while ((line = rd.readLine()) != null) { 
-				total.append(line); 
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	// Return full string
-    	return total;
-    }
-
-	@Override
+  	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_logout) {
+		if(id == R.id.action_logout)
+		{
 			cerrarSession();
 			finish();
 			//return true;
 		}
-		if (id == R.id.action_help) {
+		if(id == R.id.action_help)
+		{
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -119,20 +101,28 @@ public class MenuApplication extends Activity implements OnClickListener{
 	
 	@Override
 	public void onClick(View view) {
-		if(view == horario){
+		
+		if(view == horario)
+		{
 			Intent intent = new Intent(MenuApplication.this, Horario.class);
         	intent.putStringArrayListExtra("cookies", (ArrayList<String>) cookies);
         	startActivity(intent);
 		}
+		if(view == avisos)
+		{
+			Intent intent = new Intent(MenuApplication.this, Avisos.class);
+        	startActivity(intent);
+		}
 	}
 	
-	public HttpGet getCookies(List<String> cookies,HttpGet httpget)
+	public HttpGet setCookies(List<String> cookies,HttpGet httpget)
 	{
 		for (int i=0;i<cookies.size();i++)
 		{
-			Log.w("cookies add", cookies.get(i));
+			Log.w("cookies menu", cookies.get(i));
 			httpget.addHeader("Cookie", cookies.get(i));
 		}
 		return httpget;
 	}
+	
 }
