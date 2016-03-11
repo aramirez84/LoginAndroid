@@ -39,8 +39,10 @@ public class AndroidLogin extends Activity implements OnClickListener {
 	private Button ok;
 	private TextView result;
 	private String urlLogin="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004.oIniSesWebLic?mod=1";
-	private List<String> cookies;
-	
+	String urlHorario="https://ayamictlan.uam.mx:8443/sae/azc/IEWBC002.oConsulta";
+	private String horario=null;
+	private String Informacion_Academica=null;
+	Header coookies2;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,12 +105,13 @@ public class AndroidLogin extends Activity implements OnClickListener {
             
             if(mensajes.size()==2)
             {
-            	cookies = getCookies(response);
+            	//cookies = etCookies(response);
             	Log.w("SENCIDE", "TRUE");
             	result.setText("Login successful");
-            	Intent intent = new Intent(AndroidLogin.this, MenuApplication.class);
-            	intent.putStringArrayListExtra("cookies", (ArrayList<String>) cookies);
-            	startActivity(intent);
+            	horario(response);
+            	//Intent intent = new Intent(AndroidLogin.this, MenuApplication.class);
+            	//intent.putStringArrayListExtra("cookies", (ArrayList<String>) cookies);
+            	//startActivity(intent);
             	uname.setText("");
             	pword.setText("");
             	result.setText("");
@@ -123,7 +126,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
         } catch (IOException e) {
         	e.printStackTrace();
         }
-        /*
+        
         HttpResponse responsePost = null;
         try {
             responsePost = httpclient.execute(httppost);
@@ -134,11 +137,16 @@ public class AndroidLogin extends Activity implements OnClickListener {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        /*
         Header[] cookies = responsePost.getHeaders("Set-Cookie");
         
-        HttpGet httpget = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC020.oConsulta");
-
-        HttpGet httpget2 = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC007.oConsulta");
+        for(int i=1;i<cookies.length;i++ )
+        {
+        	coookies2=cookies[i];
+        }
+        
+        HttpGet httpget = new HttpGet(urlHorario);
+        HttpGet httpget2 = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC002.oConsulta");
 
         for (Header c : cookies) {
                 httpget.addHeader("Cookie", c.getValue());
@@ -161,7 +169,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
         HttpEntity ent=responseGet.getEntity();
 
         try {
-                Kardex=EntityUtils.toString(ent);
+                horario=EntityUtils.toString(ent);
         } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -169,7 +177,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
         }
-        //System.out.println(Kardex);
+        //System.out.println(horario);
         
         try {
             responseGet = httpclient.execute(httpget2);
@@ -192,12 +200,12 @@ public class AndroidLogin extends Activity implements OnClickListener {
 	            e.printStackTrace();
 	    }
 	    
-        //System.out.println(Informacion_Academica);
+        System.out.println(Informacion_Academica);
         
         httpclient.getConnectionManager().shutdown();
         */
     } 
-  
+     
     private StringBuilder inputStreamToString(InputStream is) {
     	String line = "";
     	StringBuilder total = new StringBuilder();
@@ -238,15 +246,140 @@ public class AndroidLogin extends Activity implements OnClickListener {
         }
 		return mensajes;
 	}
-	
-	public List<String> getCookies(HttpResponse response)
-	{
-		Header[] headers = response.getHeaders("Set-Cookie");
-        List<String> cookies = new ArrayList<String>();
-        for (Header c : headers) {
-        	cookies.add(c.getValue());
-        }
-        return cookies;
-	}
+	 
+	public void horario(HttpResponse responsePost) {
+	    	HttpResponse response = null;
+	        HttpClient httpclient = new DefaultHttpClient();
+	        HttpPost httppost = new HttpPost(urlHorario);
+	        Header[] cookies = responsePost.getHeaders("Set-Cookie");
+	        
+	        for (Header c : cookies)
+	        {
+	        	httppost.addHeader("Cookie", c.getValue());
+	        	Log.w("cookie", c.getValue().toString());
+	        }
+	        try 
+	        {
+	        	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	            nameValuePairs.add(new BasicNameValuePair("ENCABEZADO.PROCESO_CAL.AE02.1",""));
+	            nameValuePairs.add(new BasicNameValuePair("%23.PROCESO_CAL.AE02.1",""));
+	            nameValuePairs.add(new BasicNameValuePair("%23CRC.PROCESO_CAL.AE02.1",""));
+	            nameValuePairs.add(new BasicNameValuePair("TRIMESTRE_XX.TRIMESTRE.AE02.1", ""));
+	            nameValuePairs.add(new BasicNameValuePair("%23.TRIMESTRE.AE02.1", ""));
+	            nameValuePairs.add(new BasicNameValuePair("%23CRC.TRIMESTRE.AE02.1",""));
+	            nameValuePairs.add(new BasicNameValuePair("CD_DIA1.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("CD_DIA2.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("CD_DIA3.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("CD_DIA4.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("CD_DIA5.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("CVE_UEA_CL.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("%23.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("%23CRC.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("NOM_UEA_NO.E_UEA.PE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("%23.E_UEA.PE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("%23CRC.E_UEA.PE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("CD_PROFESOR.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("CVE_GRUPO_CL.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("%23.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("%23CRC.INSCRITOS.AE02.1-1",""));
+	            nameValuePairs.add(new BasicNameValuePair("%23.PROCESO_CAL.AE02.1",""));
+	            nameValuePairs.add(new BasicNameValuePair("%23CRC.PROCESO_CAL.AE02.1",""));
+	            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+	            // Execute HTTP Post Request
+	            Log.w("SENCIDE", "Execute HTTP Horario Request");
+	            response = httpclient.execute(httppost);
+	            String str = inputStreamToString(response.getEntity().getContent()).toString();
+	            
+	            Log.w("Horario",str);
+	            //Log.w("SENCIDE", str);
+	            
+	            
+	        } catch (ClientProtocolException e) {
+	        	e.printStackTrace();
+	        } catch (IOException e) {
+	        	e.printStackTrace();
+	        }
+	        
+	        /*HttpResponse responsePost = null;
+	        try {
+	            responsePost = httpclient.execute(httppost);
+	        } catch (ClientProtocolException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	        Header[] cookies = responsePost.getHeaders("Set-Cookie");
+	        
+	        for(int i=1;i<cookies.length;i++ )
+	        {
+	        	coookies2=cookies[i];
+	        }
+	        String urlHorario="https://ayamictlan.uam.mx:8443/sae/azc/IEWBC002.oConsulta";
+	        HttpGet httpget = new HttpGet(urlHorario);
+	        HttpGet httpget2 = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC002.oConsulta");
+
+	        for (Header c : cookies) {
+	                httpget.addHeader("Cookie", c.getValue());
+	        }
+
+	        //for (Header c : cookies) {
+	            httpget2.addHeader("Cookie", coookies2.toString());
+	            Log.w("Header Cookie2", coookies2.toString());
+	        //}
+	        
+	        HttpResponse responseGet = null;
+	        try {
+	                responseGet = httpclient.execute(httpget);
+	        } catch (ClientProtocolException e) {
+	                // TODO Auto-generated catch block
+	                e.printStackTrace();
+	        } catch (IOException e) {
+	                // TODO Auto-generated catch block
+	                e.printStackTrace();
+	        }
+	        HttpEntity ent=responseGet.getEntity();
+
+	        try {
+	                horario=EntityUtils.toString(ent);
+	        } catch (ParseException e) {
+	                // TODO Auto-generated catch block
+	                e.printStackTrace();
+	        } catch (IOException e) {
+	                // TODO Auto-generated catch block
+	                e.printStackTrace();
+	        }
+	        //System.out.println(horario);
+	        
+	        try {
+	            responseGet = httpclient.execute(httpget2);
+		    } catch (ClientProtocolException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		    } catch (IOException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		    }
+		    ent=responseGet.getEntity();
+		
+		    try {
+		            Informacion_Academica=EntityUtils.toString(ent);
+		    } catch (ParseException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		    } catch (IOException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		    }
+		    
+	        System.out.println(Informacion_Academica);
+	        
+	        httpclient.getConnectionManager().shutdown();
+	        */
+
+	    } 
+
+	
 }

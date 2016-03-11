@@ -26,7 +26,6 @@ import org.apache.http.util.EntityUtils;
 public class Horario extends Activity
 {
 	private List<String> cookies;
-	private String urlHorario="https://ayamictlan.uam.mx:8443/sae/azc/IEWBC002.oConsulta";
 	private TextView horario;
 	String horarioHtml=null;
     @Override
@@ -37,7 +36,7 @@ public class Horario extends Activity
         Bundle bundle = getIntent().getExtras();
         cookies=bundle.getStringArrayList("cookies");
         horario = (TextView)findViewById(R.id.horario);
-        horarioHtml = getHorario();
+        //horarioHtml = getHorario();
         horario.setText(Html.fromHtml(horarioHtml));
         Tabla tabla = new Tabla(this, (TableLayout)findViewById(R.id.tabla));
         tabla.agregarCabecera(R.array.cabecera_tabla);
@@ -53,34 +52,7 @@ public class Horario extends Activity
         }
     }
     
-    public String getHorario()
-    {
-    	String strHorario = null;
-    	HttpResponse response = null;
-        // Create a new HttpClient and Post Header
-        HttpClient httpclient = new DefaultHttpClient();
-        
-        
-        HttpGet httpget = new HttpGet(urlHorario);
-        httpget=setCookies(cookies,httpget);
-
-        try {
-        	   	
-            // Execute HTTP Post Request
-            Log.w("SENCIDE", "Execute HTTP Post Request");
-            response = httpclient.execute(httpget);
-            HttpEntity ent=response.getEntity();  
-            ent=response.getEntity();
-            strHorario = EntityUtils.toString(ent);
-            System.out.println(strHorario);
-            
-        } catch (ClientProtocolException e) {
-        	e.printStackTrace();
-        } catch (IOException e) {
-        	e.printStackTrace();
-        }
-		return strHorario;   
-    } 
+    
     public HttpGet setCookies(List<String> cookies,HttpGet httpget)
 	{
 		for (int i=0;i<cookies.size();i++)
