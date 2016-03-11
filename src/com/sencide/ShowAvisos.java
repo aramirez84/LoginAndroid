@@ -18,6 +18,7 @@ public class ShowAvisos extends Activity
     {
     	super.onCreate(saveInstanceState);
         setContentView(R.layout.avisos_list);
+        //downloadFile(imageHttpAddress);
             
         // Get the reference of ListViewAnimals
         ListView animalList=(ListView)findViewById(R.id.listViewAvisos);
@@ -58,7 +59,5 @@ public class ShowAvisos extends Activity
         avisosNameList.add("DONKEY");
         avisosNameList.add("LAMB");
         avisosNameList.add("GOAT");
-       
-       
     }
 }
