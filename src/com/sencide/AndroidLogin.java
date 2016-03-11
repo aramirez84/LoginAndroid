@@ -39,8 +39,6 @@ public class AndroidLogin extends Activity implements OnClickListener {
 	private Button ok;
 	private TextView result;
 	private String urlLogin="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004.oIniSesWebLic?mod=1";
-	private String Kardex=null;
-	private String Informacion_Academica=null;
 	private List<String> cookies;
 	
     /** Called when the activity is first created. */
