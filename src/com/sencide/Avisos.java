@@ -30,9 +30,10 @@ import android.widget.Toast;
 public class Avisos extends Activity
 {
 	private String UrlUAM = "http://www.azc.uam.mx/";
-	private String imageHttpAddress = null; 
+	private String imageHttpAddress = "";
 	private ImageView imageView;
     private Bitmap loadedImage;
+    List<String> imagenes;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,7 +42,7 @@ public class Avisos extends Activity
         setContentView(R.layout.avisos);
         imageView = (ImageView) findViewById(R.id.image_view);       
         getConnection(UrlUAM);
-        
+                
             
         // Get The Refference Of Button  
         Button btnShowAnimal=(Button)findViewById(R.id.butttonShowAnimal);
@@ -82,7 +83,8 @@ public class Avisos extends Activity
             ent=response.getEntity();
             String str = EntityUtils.toString(ent);
             Pattern pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_]*.jpg");
-            getImages(pattern, str);
+            imagenes=getImages(pattern, str);
+            downloadImage(imagenes,url);
             //System.out.println(str);
             
         }
@@ -103,7 +105,26 @@ public class Avisos extends Activity
         while(matcher.find()){
         	mensajes.add(matcher.group(0));
         }
-        Log.w("Get images", mensajes.toString());
-		return mensajes;
+        return mensajes;
 	}
+    void downloadImage(List<String> imagenes,String url) {
+        URL imageUrl = null;
+        for (int i=0;i<imagenes.size();i++)
+		{
+        	imageHttpAddress = "";
+        	imageHttpAddress=url+imagenes.get(i);
+        	Log.w("imagenes", imagenes.get(i));
+        	Log.w("imagenHttpAddress", imageHttpAddress);
+		}
+        try {
+            imageUrl = new URL(imageHttpAddress);
+            HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
+            conn.connect();
+            loadedImage = BitmapFactory.decodeStream(conn.getInputStream());
+            imageView.setImageBitmap(loadedImage);
+        } catch (IOException e) {
+            Toast.makeText(getApplicationContext(), "Error cargando la imagen: "+e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
 }
