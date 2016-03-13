@@ -29,6 +29,7 @@ import android.widget.Button;
 
 public class MenuApplication extends Activity implements OnClickListener{
 	private String urlFinSession="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU005.oFinSesion";
+	
 	private List<String> cookies;
 	private Button horario,biblioteca,avisos,contactos;
 	
@@ -55,7 +56,8 @@ public class MenuApplication extends Activity implements OnClickListener{
 		getMenuInflater().inflate(R.menu.menu, menu);
 		return true;
 	}
-	
+	 
+
 	public void cerrarSession() {
     	HttpResponse response = null;
         // Create a new HttpClient and Post Header
@@ -104,9 +106,9 @@ public class MenuApplication extends Activity implements OnClickListener{
 		
 		if(view == horario)
 		{
-			Intent intent = new Intent(MenuApplication.this, Horario.class);
-        	intent.putStringArrayListExtra("cookies", (ArrayList<String>) cookies);
-        	startActivity(intent);
+			//Intent intent = new Intent(MenuApplication.this, Horario.class);
+        	//intent.putStringArrayListExtra("cookies", (ArrayList<String>) cookies);
+        	//startActivity(intent);
 		}
 		if(view == avisos)
 		{
@@ -124,5 +126,5 @@ public class MenuApplication extends Activity implements OnClickListener{
 		}
 		return httpget;
 	}
-	
+		
 }
