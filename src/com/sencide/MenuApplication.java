@@ -39,7 +39,6 @@ public class MenuApplication extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.menuapplication);
         Bundle bundle = getIntent().getExtras();
-        cookies=bundle.getStringArrayList("cookies");
         horario = (Button)findViewById(R.id.btn_horario);
         biblioteca=(Button)findViewById(R.id.btn_biblioteca);
         avisos=(Button)findViewById(R.id.btn_avisos);
@@ -65,18 +64,13 @@ public class MenuApplication extends Activity implements OnClickListener{
         
         
         HttpGet httpget = new HttpGet(urlFinSession);
-        httpget=setCookies(cookies,httpget);
-
+        
         try {
         	   	
             // Execute HTTP Post Request
             Log.w("SENCIDE", "Execute HTTP Post Request");
             response = httpclient.execute(httpget);
-            HttpEntity ent=response.getEntity();  
-            ent=response.getEntity();
-            String str = EntityUtils.toString(ent);
-            System.out.println(str);
-            
+                        
         } catch (ClientProtocolException e) {
         	e.printStackTrace();
         } catch (IOException e) {
@@ -115,16 +109,5 @@ public class MenuApplication extends Activity implements OnClickListener{
 			Intent intent = new Intent(MenuApplication.this, Avisos.class);
         	startActivity(intent);
 		}
-	}
-	
-	public HttpGet setCookies(List<String> cookies,HttpGet httpget)
-	{
-		for (int i=0;i<cookies.size();i++)
-		{
-			Log.w("cookies menu", cookies.get(i));
-			httpget.addHeader("Cookie", cookies.get(i));
-		}
-		return httpget;
-	}
-		
+	}	
 }

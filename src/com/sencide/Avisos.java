@@ -40,8 +40,7 @@ public class Avisos extends Activity
     {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.avisos);
-        imageView = (ImageView) findViewById(R.id.image_view);       
-        getConnection(UrlUAM);
+        //getConnection(UrlUAM);
                 
             
         // Get The Refference Of Button  
@@ -56,75 +55,5 @@ public class Avisos extends Activity
                 startActivity(intentAnimalList);
             }
         });
-    }
-	void downloadFile(String imageHttpAddress) {
-        URL imageUrl = null;
-        try {
-            imageUrl = new URL(imageHttpAddress);
-            HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
-            conn.connect();
-            loadedImage = BitmapFactory.decodeStream(conn.getInputStream());
-            imageView.setImageBitmap(loadedImage);
-        } catch (IOException e) {
-            Toast.makeText(getApplicationContext(), "Error cargando la imagen: "+e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-    }
-    public void getConnection(String url)
-    {
-    	HttpResponse response = null;
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet(url);
-        try
-        {
-        	Log.w("Get images", "Execute HTTP UAM Request");
-            response = httpclient.execute(httpget);
-            HttpEntity ent=response.getEntity();  
-            ent=response.getEntity();
-            String str = EntityUtils.toString(ent);
-            Pattern pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_]*.jpg");
-            imagenes=getImages(pattern, str);
-            downloadImage(imagenes,url);
-            //System.out.println(str);
-            
-        }
-        catch (ClientProtocolException e)
-        {
-        	e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-        	e.printStackTrace();
-        }
-    }
-    public List<String> getImages(Pattern pattern,String str)
-	{
-		Matcher matcher = pattern.matcher(str);
-        // Guardamos los mensajes que nos da en la variable mensaje
-        List<String> mensajes = new ArrayList<String>();
-        while(matcher.find()){
-        	mensajes.add(matcher.group(0));
-        }
-        return mensajes;
-	}
-    void downloadImage(List<String> imagenes,String url) {
-        URL imageUrl = null;
-        for (int i=0;i<imagenes.size();i++)
-		{
-        	imageHttpAddress = "";
-        	imageHttpAddress=url+imagenes.get(i);
-        	Log.w("imagenes", imagenes.get(i));
-        	Log.w("imagenHttpAddress", imageHttpAddress);
-		}
-        try {
-            imageUrl = new URL(imageHttpAddress);
-            HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
-            conn.connect();
-            loadedImage = BitmapFactory.decodeStream(conn.getInputStream());
-            imageView.setImageBitmap(loadedImage);
-        } catch (IOException e) {
-            Toast.makeText(getApplicationContext(), "Error cargando la imagen: "+e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
     }
 }

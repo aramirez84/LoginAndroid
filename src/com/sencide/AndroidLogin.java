@@ -40,8 +40,6 @@ public class AndroidLogin extends Activity implements OnClickListener {
 	private TextView result;
 	private String urlLogin="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004.oIniSesWebLic?mod=1";
 	String urlHorario="https://ayamictlan.uam.mx:8443/sae/azc/IEWBC002.oConsulta";
-	private String horario=null;
-	private String Informacion_Academica=null;
 	Header coookies2;
     /** Called when the activity is first created. */
     @Override
@@ -108,10 +106,8 @@ public class AndroidLogin extends Activity implements OnClickListener {
             	//cookies = etCookies(response);
             	Log.w("SENCIDE", "TRUE");
             	result.setText("Login successful");
-            	horario(response);
-            	//Intent intent = new Intent(AndroidLogin.this, MenuApplication.class);
-            	//intent.putStringArrayListExtra("cookies", (ArrayList<String>) cookies);
-            	//startActivity(intent);
+            	Intent intent = new Intent(AndroidLogin.this, MenuApplication.class);
+            	startActivity(intent);
             	uname.setText("");
             	pword.setText("");
             	result.setText("");
@@ -137,74 +133,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        /*
-        Header[] cookies = responsePost.getHeaders("Set-Cookie");
-        
-        for(int i=1;i<cookies.length;i++ )
-        {
-        	coookies2=cookies[i];
-        }
-        
-        HttpGet httpget = new HttpGet(urlHorario);
-        HttpGet httpget2 = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC002.oConsulta");
-
-        for (Header c : cookies) {
-                httpget.addHeader("Cookie", c.getValue());
-        }
-
-        for (Header c : cookies) {
-            httpget2.addHeader("Cookie", c.getValue());
-        }
-        
-        HttpResponse responseGet = null;
-        try {
-                responseGet = httpclient.execute(httpget);
-        } catch (ClientProtocolException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-        } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-        }
-        HttpEntity ent=responseGet.getEntity();
-
-        try {
-                horario=EntityUtils.toString(ent);
-        } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-        } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-        }
-        //System.out.println(horario);
-        
-        try {
-            responseGet = httpclient.execute(httpget2);
-	    } catch (ClientProtocolException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	    } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	    }
-	    ent=responseGet.getEntity();
-	
-	    try {
-	            Informacion_Academica=EntityUtils.toString(ent);
-	    } catch (ParseException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	    } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	    }
-	    
-        System.out.println(Informacion_Academica);
-        
-        httpclient.getConnectionManager().shutdown();
-        */
-    } 
+            } 
      
     private StringBuilder inputStreamToString(InputStream is) {
     	String line = "";
