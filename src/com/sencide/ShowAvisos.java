@@ -48,25 +48,26 @@ public class ShowAvisos extends Activity
     {
     	super.onCreate(saveInstanceState);
         setContentView(R.layout.avisos_list);
-        List<String> urlImagen=getConnection(UrlUAM);
-        Bitmap[] imgid = downloadImage(urlImagen, UrlUAM);
-        AvisosListAdapter adapter=new AvisosListAdapter(this,lenguajeProgramacion,urlImagen);
+        
+        //Bitmap[] imgid = downloadImage(urlImagen, UrlUAM);
+        //AvisosListAdapter adapter=new AvisosListAdapter(this,lenguajeProgramacion,urlImagen);
+        /*
         lista=(ListView)findViewById(R.id.listViewAvisos);
         lista.setAdapter(adapter);
-        /*lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String Slecteditem= lenguajeProgramacion[+position];
                 Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
             }
-        });*/
-        /*
+        });
+        */
         // Get the reference of ListViewAnimals
         ListView animalList=(ListView)findViewById(R.id.listViewAvisos);
            
            
         avisosNameList = new ArrayList<String>();
-        //getAnimalNames();
+        getAnimalNames();
         // Create The Adapter with passing ArrayList as 3rd parameter
         ArrayAdapter<String> arrayAdapter =
         		new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, avisosNameList);
@@ -82,9 +83,9 @@ public class ShowAvisos extends Activity
             	String selectedAnimal=avisosNameList.get(position);
                 Toast.makeText(getApplicationContext(), "Animal Selected : "+selectedAnimal,   Toast.LENGTH_LONG).show();
             }
-        });*/
+        });
     }
-    /*
+    
    void getAnimalNames()
     {
         avisosNameList.add("DOG");
@@ -100,60 +101,6 @@ public class ShowAvisos extends Activity
         avisosNameList.add("DONKEY");
         avisosNameList.add("LAMB");
         avisosNameList.add("GOAT");
-    }*/
-   public  List<String> getConnection(String url)
-   {
-   	HttpResponse response = null;
-       HttpClient httpclient = new DefaultHttpClient();
-       HttpGet httpget = new HttpGet(url);
-       try
-       {
-    	   response = httpclient.execute(httpget);
-           HttpEntity ent=response.getEntity();  
-           ent=response.getEntity();
-           String str = EntityUtils.toString(ent);
-           Pattern pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_]*.jpg");
-           imagenes=getImages(pattern, str);
-       }
-       catch (ClientProtocolException e)
-       {
-       	e.printStackTrace();
-       }
-       catch (IOException e)
-       {
-       	e.printStackTrace();
-       }
-       return imagenes;
-   }
-   public List<String> getImages(Pattern pattern,String str)
-	{
-		Matcher matcher = pattern.matcher(str);
-       // Guardamos los mensajes que nos da en la variable mensaje
-       List<String> mensajes = new ArrayList<String>();
-       while(matcher.find()){
-       	mensajes.add(matcher.group(0));
-       }
-       return mensajes;
-	}
-   public Bitmap[] downloadImage(List<String> imagenes,String url) {
-       URL imageUrl = null;
-       loadedImage=new Bitmap[imagenes.size()];
-       try {
-    	   for (int i=0;i<imagenes.size();i++)
-   			{
-    		   imageHttpAddress = "";
-    		   imageHttpAddress=url+imagenes.get(i);
-    		   imageUrl = new URL(imageHttpAddress);
-    		   HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
-    		   conn.connect();
-    		   loadedImage[i]=(BitmapFactory.decodeStream(conn.getInputStream()));
-    		   Log.w("imagenes", loadedImage.toString());
-    		   //imageView.setImageBitmap(loadedImage);
-   			}
-       } catch (IOException e) {
-           Toast.makeText(getApplicationContext(), "Error cargando la imagen: "+e.getMessage(), Toast.LENGTH_LONG).show();
-           e.printStackTrace();
-       }
-       return loadedImage;
-   }
+    }
+   
 }

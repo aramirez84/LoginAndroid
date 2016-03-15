@@ -21,4 +21,9 @@
     <string name="texto">Ejemplo de una tabla en Android</string>
     <string name="action_settings">Settings</string>
     
+    <!-- Decription for tabs -->
+    <string name="tabAvisos">Avisos Pricipales</string>
+    <string name="tabConsejoAcademico">Consejo Academico</string>
+    <string name="tabActividades">Agenda de actividades Academicas y Culturales</string>
+    <string name="tabDivisiones">Divisiones Academicas</string>
 </resources>

@@ -1,4 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    
+    <TabHost 
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+     	android:layout_height="match_parent">
+     	
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+ 
+         	<TabWidget 
+         	    android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@android:id/tabs" />
+ 			<FrameLayout 
+ 			    android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@android:id/tabcontent" >
+ 			
+ 			<LinearLayout
+ 			    android:id="@+id/Avisos"
+ 			    android:layout_width="match_parent"
+ 			    android:layout_height="match_parent"
+ 			    android:orientation="vertical" >
+
+ 			    <TextView
+ 			        android:id="@+id/textViewAvisos"
+ 			        android:layout_width="wrap_content"
+ 			        android:layout_height="wrap_content"
+ 			        android:text="@string/avisos" />
+
+ 			    <ImageView
+ 			        android:id="@+id/imageAviso1"
+ 			        android:layout_width="fill_parent"
+ 			        android:layout_height="wrap_content"
+ 			        android:layout_marginTop="25dp"
+ 			        android:layout_weight="0.26" />
+
+ 			    <ImageView
+ 			        android:id="@+id/imageAviso2"
+ 			        android:layout_width="fill_parent"
+ 			        android:layout_height="wrap_content"
+ 			        android:layout_marginTop="25dp"
+ 			        android:layout_weight="0.26" />
+
+ 			    <ImageView
+ 			        android:id="@+id/imageAviso3"
+ 			        android:layout_width="fill_parent"
+ 			        android:layout_height="wrap_content"
+ 			        android:layout_marginTop="25dp"
+ 			        android:layout_weight="0.26" />
+
+ 			    <ImageView
+ 			        android:id="@+id/imageAviso4"
+ 			        android:layout_width="fill_parent"
+ 			        android:layout_height="wrap_content"
+ 			        android:layout_marginTop="25dp"
+ 			        android:layout_weight="0.26" />
+
+ 			    <ImageView
+ 			        android:id="@+id/imageAviso5"
+ 			        android:layout_width="fill_parent"
+ 			        android:layout_height="wrap_content"
+ 			        android:layout_marginTop="25dp"
+ 			        android:layout_weight="0.26" />
+
+ 			    <ImageView
+ 			        android:id="@+id/imageAviso6"
+ 			        android:layout_width="fill_parent"
+ 			        android:layout_height="wrap_content"
+ 			        android:layout_marginTop="25dp"
+ 			        android:layout_weight="0.26" />
+
+ 			    <Button
+ 			        android:id="@+id/butttonShowAnimal"
+ 			        android:layout_width="fill_parent"
+ 			        android:layout_height="wrap_content"
+ 			        android:layout_marginTop="25dp"
+ 			        android:text="Show Animals List" />
+ 			</LinearLayout>
+ 
+            <LinearLayout 
+                android:id="@+id/Consejo"
+                android:orientation="vertical"
+              	android:layout_width="match_parent"
+              	android:layout_height="match_parent" >
+ 					
+                <TextView 
+                    android:id="@+id/textViewConsejo"
+                    android:text="@string/tabConsejoAcademico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+        	</LinearLayout>
+        	
+        	<LinearLayout 
+                android:id="@+id/Actividades"
+                android:orientation="vertical"
+              	android:layout_width="match_parent"
+              	android:layout_height="match_parent" >
+ 					
+                <TextView 
+                    android:id="@+id/textViewActividades"
+                    android:text="@string/tabActividades"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+        	</LinearLayout>
+        	
+        	<LinearLayout 
+                android:id="@+id/Divisiones"
+                android:orientation="vertical"
+              	android:layout_width="match_parent"
+              	android:layout_height="match_parent" >
+ 					
+                <TextView 
+                    android:id="@+id/textViewDivisiones"
+                    android:text="@string/tabDivisiones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+        	</LinearLayout>
+         </FrameLayout>
+    </LinearLayout>
+</TabHost>
+<!--
+</LinearLayout>
+ 
 <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -14,15 +145,8 @@
         android:layout_height="wrap_content"
         android:text="Populating ListView with ArrayList Example"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <Button
-       android:id="@+id/butttonShowAnimal"
-        android:layout_marginTop="25dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Show Animals List"
-        />
-   
+ -->
+    
 
 </LinearLayout>
 
