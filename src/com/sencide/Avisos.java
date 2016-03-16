@@ -22,6 +22,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore.Images;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,12 +45,19 @@ public class Avisos extends Activity
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.avisos);
         List<String> urlImagen=getConnection(UrlUAM);
+        
         imageAviso1 = (ImageView) findViewById(R.id.imageAviso1);
         imageAviso2 = (ImageView) findViewById(R.id.imageAviso2);
         imageAviso3 = (ImageView) findViewById(R.id.imageAviso3);
         imageAviso4 = (ImageView) findViewById(R.id.imageAviso4);
         imageAviso5 = (ImageView) findViewById(R.id.imageAviso5);
         imageAviso6 = (ImageView) findViewById(R.id.imageAviso6);
+        imageAviso1.setImageBitmap(downloadImage(urlImagen, UrlUAM,0));
+        imageAviso2.setImageBitmap(downloadImage(urlImagen, UrlUAM,1));
+        imageAviso3.setImageBitmap(downloadImage(urlImagen, UrlUAM,2));
+        imageAviso4.setImageBitmap(downloadImage(urlImagen, UrlUAM,3));
+        imageAviso5.setImageBitmap(downloadImage(urlImagen, UrlUAM,4));
+        imageAviso6.setImageBitmap(downloadImage(urlImagen, UrlUAM,5));
         Resources res = getResources();
         
         TabHost tabs=(TabHost)findViewById(android.R.id.tabhost);
@@ -113,8 +121,9 @@ public class Avisos extends Activity
 	        HttpEntity ent=response.getEntity();  
 	        ent=response.getEntity();
 	        String str = EntityUtils.toString(ent);
-	        Pattern pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_]*.jpg");
+	        Pattern pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.jpg|\\/coordinaciones\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.gif");
 	        imagenes=getImages(pattern, str);
+	        Log.w("urlUNAM",imagenes.toString());
 	    }
 	    catch (ClientProtocolException e)
 	    {
@@ -139,28 +148,25 @@ public class Avisos extends Activity
 	    return mensajes;
 	}
 	
-	public void downloadImage(List<String> imagenes,String url)
+	public Bitmap downloadImage(List<String> imagenes,String url,Integer index)
 	{
 		URL imageUrl = null;
 	    try
 	    {
-	    	for (int i=0;i<imagenes.size();i++)
-	   		{
-	    		imageHttpAddress = "";
-	    		imageHttpAddress=url+imagenes.get(i);
-	    		imageUrl = new URL(imageHttpAddress);
-	    		HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
-	    		conn.connect();
-	    		loadedImage=(BitmapFactory.decodeStream(conn.getInputStream()));
-	    		Log.w("imagenes", loadedImage.toString());
-	    		imageAviso1.setImageBitmap(loadedImage);
-	   		}
-	    }
+	    	imageHttpAddress = "";
+	    	imageHttpAddress=url+imagenes.get(index);
+	    	imageUrl = new URL(imageHttpAddress);
+	    	HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
+	    	conn.connect();
+	    	loadedImage=(BitmapFactory.decodeStream(conn.getInputStream()));
+	    	Log.w("imagenes", loadedImage.toString());
+	   	}
 	    catch (IOException e)
 	    {
 	    	Toast.makeText(getApplicationContext(), "Error cargando la imagen: "+e.getMessage(), Toast.LENGTH_LONG).show();
 	        e.printStackTrace();
 	    }
+	    return loadedImage;
 	}
 
 }
