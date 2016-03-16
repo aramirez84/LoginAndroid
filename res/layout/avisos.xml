@@ -50,49 +50,36 @@
 		 			        android:id="@+id/imageAviso1"
 		 			        android:layout_width="fill_parent"
 		 			        android:layout_height="wrap_content"
-		 			        android:layout_marginTop="25dp"
-		 			        android:layout_weight="0.26" />
+		 			        android:layout_marginTop="25dp" />
 		
 		 			    <ImageView
 		 			        android:id="@+id/imageAviso2"
 		 			        android:layout_width="fill_parent"
 		 			        android:layout_height="wrap_content"
-		 			        android:layout_marginTop="25dp"
-		 			        android:layout_weight="0.26" />
+		 			        android:layout_marginTop="25dp"/>
  			            <ImageView
 					        android:id="@+id/imageAviso3"
 					        android:layout_width="fill_parent"
 					        android:layout_height="wrap_content"
-					        android:layout_marginTop="25dp"
-					        android:layout_weight="0.26" />
+					        android:layout_marginTop="25dp" />
 		
 					    <ImageView
 					        android:id="@+id/imageAviso4"
 					        android:layout_width="fill_parent"
 					        android:layout_height="wrap_content"
-					        android:layout_marginTop="25dp"
-					        android:layout_weight="0.26" />
+					        android:layout_marginTop="25dp"/>
 		
 					    <ImageView
 					        android:id="@+id/imageAviso5"
 					        android:layout_width="fill_parent"
 					        android:layout_height="wrap_content"
-					        android:layout_marginTop="25dp"
-					        android:layout_weight="0.26" />
+					        android:layout_marginTop="25dp"/>
 		
 					    <ImageView
 					        android:id="@+id/imageAviso6"
 					        android:layout_width="fill_parent"
 					        android:layout_height="wrap_content"
-					        android:layout_marginTop="25dp"
-					        android:layout_weight="0.26" />
-		
-					    <Button
-					        android:id="@+id/butttonShowAnimal"
-					        android:layout_width="fill_parent"
-					        android:layout_height="wrap_content"
-					        android:layout_marginTop="25dp"
-					        android:text="Show Animals List" />	    
+					        android:layout_marginTop="25dp" />	    
  			        </LinearLayout>
  			    </ScrollView>
 
@@ -139,26 +126,5 @@
          </FrameLayout>
     </LinearLayout>
 </TabHost>
-<!--
-</LinearLayout>
- 
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#4D9494"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-		
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_marginTop="80dp"
-        android:gravity="center_horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Populating ListView with ArrayList Example"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
- -->
-    
-
 </LinearLayout>
 

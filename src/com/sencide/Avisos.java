@@ -96,19 +96,6 @@ public class Avisos extends Activity
 				Log.i("AndroidTabsDemo", "Pulsada pestaña: " + tabId);
 			}
 		});        
-            
-        // Get The Refference Of Button  
-        Button btnShowAnimal=(Button)findViewById(R.id.butttonShowAnimal);
-        
-        // Set OnClick Listener on  button  and start AnimalListActivity when clicked on Button
-        btnShowAnimal.setOnClickListener(new View.OnClickListener()
-        {
-        	public void onClick(View v)
-        	{
-        		Intent intentAnimalList=new Intent(getApplicationContext(),ShowAvisos.class);
-                startActivity(intentAnimalList);
-            }
-        });
     }
 	public  List<String> getConnection(String url)
 	{
