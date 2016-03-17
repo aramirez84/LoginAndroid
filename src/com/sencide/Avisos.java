@@ -112,7 +112,7 @@ public class Avisos extends Activity
 	        ent=response.getEntity();
 	        String str = EntityUtils.toString(ent);
 	        Pattern pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.jpg|\\/coordinaciones\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.gif");
-	        Pattern 2 = Pattern.compile("\\/agenda\\.php\\?id=[0-9]*\\&[a-z]*;[a-z]*=[0-9]*\\&[a-z]*;div=1");
+	        Pattern pattern2 = Pattern.compile("\\/agenda\\.php\\?id=[0-9]*\\&[a-z]*;[a-z]*=[0-9]*\\&[a-z]*;div=1");
 	        imagenes=getImages(pattern, str);
 	        Log.w("urlUNAM",imagenes.toString());
 	    }
