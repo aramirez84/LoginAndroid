@@ -66,7 +66,7 @@ public class Avisos extends Activity
         TabHost.TabSpec spec=tabs.newTabSpec("mitab1");
         spec.setContent(R.id.Avisos);
         spec.setIndicator("Avisos", 
-        		res.getDrawable(android.R.drawable.ic_btn_speak_now));
+        		res.getDrawable(android.R.drawable.ic_dialog_map));
         tabs.addTab(spec);
         
         spec=tabs.newTabSpec("mitab2");
