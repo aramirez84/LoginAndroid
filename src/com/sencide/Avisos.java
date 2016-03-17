@@ -112,8 +112,13 @@ public class Avisos extends Activity
 	        ent=response.getEntity();
 	        String str = EntityUtils.toString(ent);
 	        Pattern pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.jpg|\\/coordinaciones\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.gif");
-	        Pattern pattern2 = Pattern.compile("\\/agenda\\.php\\?id=[0-9]*\\&[a-z]*;[a-z]*=[0-9]*\\&[a-z]*;div=1");
 	        imagenes=getImages(pattern, str);
+	        Pattern patternDetalles = Pattern.compile("\\/agenda\\.php\\?id=[0-9]*\\&[a-z]*;[a-z]*=[0-9]*\\&[a-z]*;div=1");
+	        Pattern patternConsejo = Pattern.compile("<span class='titulohome'>[A-Z0].*");
+	        Pattern patternDetallesConsejo = Pattern.compile("app\\/ca\\/docs\\/[a-z].*[;]|http:\\/\\/consejoacademico.azc.uam.mx\\/mod\\/folder\\/view\\.php\\?id=[0-9]*");
+	        Pattern patternActividades = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[A-Z-a-z0-9-_]*.(jpg|gif)");
+	        Pattern patternNoticias = Pattern.compile("\\/privado\\/noticias\\/imagenes\\/[a-z0-9_A-Z]*\\.(jpg|gif)");
+	        Pattern patternDetalleNoticias = Pattern.compile("\\/noticias\\.php\\?id=[a-z0-9\\&;=]*");
 	        Log.w("urlUNAM",imagenes.toString());
 	    }
 	    catch (ClientProtocolException e)
