@@ -26,4 +26,7 @@
     <string name="tabConsejoAcademico">Consejo Academico</string>
     <string name="tabActividades">Agenda de actividades Academicas y Culturales</string>
     <string name="tabDivisiones">Divisiones Academicas</string>
+    
+    <!-- Details for tabs -->
+    <string name="detalles">Detalles .....</string>
 </resources>
