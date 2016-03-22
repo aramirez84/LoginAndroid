@@ -38,9 +38,13 @@ public class Avisos extends Activity
 {
 	private String UrlUAM = "http://www.azc.uam.mx";
 	private String imageHttpAddress = "";
-	private ImageView imageAviso1,imageAviso2,imageAviso3,imageAviso4,imageAviso5,imageAviso6;
-    private TextView textAviso1,textAviso2,textAviso3,textAviso4,textAviso5,textAviso6;
-	private Bitmap loadedImage;
+	private ImageView imageAviso1,imageAviso2,imageAviso3,imageAviso4,imageAviso5;
+    private TextView textAviso1,textAviso2,textAviso3,textAviso4,textAviso5;
+    private TextView textConsejo1,textConsejo2,textConsejo3;
+    private TextView textDetalleConsejo1,textDetalleConsejo2,textDetalleConsejo3;
+    private ImageView imageAgenda1,imageAgenda2,imageAgenda3,imageAgenda4;
+    private ImageView imageNoticia1,imageNoticia2;
+    private Bitmap loadedImage;
     
 	@Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,48 +52,73 @@ public class Avisos extends Activity
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.avisos);
         
-        Pattern pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.jpg|\\/coordinaciones\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.gif");
-        Pattern patternDetalles = Pattern.compile("\\/agenda.*");
-        Pattern patternConsejo = Pattern.compile("<span class=\"titulohome\">[A-Z0].*");
-        Pattern patternDetallesConsejo = Pattern.compile("app\\/ca\\/docs\\/[a-z].*[;]|http:\\/\\/consejoacademico.azc.uam.mx\\/mod\\/folder\\/view\\.php\\?id=[0-9]*");
-        Pattern patternActividades = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[A-Z-a-z0-9-_]*.(jpg|gif)");
-        Pattern patternNoticias = Pattern.compile("\\/privado\\/noticias\\/imagenes\\/[a-z0-9_A-Z]*\\.(jpg|gif)");
-        Pattern patternDetalleNoticias = Pattern.compile("\\/noticias\\.php\\?id=[a-z0-9\\&;=]*");
-        
-        
+               
         String urlImagen=getConnection(UrlUAM);
-        List<String> imagenes=getImages(pattern, urlImagen);
-        List<String> detalles=getImages(patternDetalles, urlImagen);
-        List<String> consejo=getImages(patternConsejo, urlImagen);
-        List<String> detallesConsejo=getImages(patternDetallesConsejo, urlImagen);
                 
         /*************************	Tab 1	***************************/
+        Pattern pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.jpg|\\/coordinaciones\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.gif");
+        List<String> imagenes=getImages(pattern, urlImagen);
+        Pattern patternDetalles = Pattern.compile("\\/agenda.*");
+        List<String> detalles=getImages(patternDetalles, urlImagen);
         
         imageAviso1 = (ImageView) findViewById(R.id.imageAviso1);
         imageAviso2 = (ImageView) findViewById(R.id.imageAviso2);
         imageAviso3 = (ImageView) findViewById(R.id.imageAviso3);
         imageAviso4 = (ImageView) findViewById(R.id.imageAviso4);
         imageAviso5 = (ImageView) findViewById(R.id.imageAviso5);
-        imageAviso6 = (ImageView) findViewById(R.id.imageAviso6);
+        
         textAviso1=(TextView)findViewById(R.id.textViewAviso1);
         textAviso2=(TextView)findViewById(R.id.textViewAviso2);
         textAviso3=(TextView)findViewById(R.id.textViewAviso3);
         textAviso4=(TextView)findViewById(R.id.textViewAviso4);
         textAviso5=(TextView)findViewById(R.id.textViewAviso5);
-        textAviso6=(TextView)findViewById(R.id.textViewAviso6);
-        
+                
         setDetalle(detalles, UrlUAM, 1, textAviso1);
         setDetalle(detalles, UrlUAM, 2, textAviso2);
         setDetalle(detalles, UrlUAM, 3, textAviso3);
         setDetalle(detalles, UrlUAM, 4, textAviso4);
         setDetalle(detalles, UrlUAM, 5, textAviso5);
-        setDetalle(detalles, UrlUAM, 6, textAviso6);
+        
         imageAviso1.setImageBitmap(downloadImage(imagenes, UrlUAM,0));
         imageAviso2.setImageBitmap(downloadImage(imagenes, UrlUAM,1));
         imageAviso3.setImageBitmap(downloadImage(imagenes, UrlUAM,2));
         imageAviso4.setImageBitmap(downloadImage(imagenes, UrlUAM,3));
         imageAviso5.setImageBitmap(downloadImage(imagenes, UrlUAM,4));
-        imageAviso6.setImageBitmap(downloadImage(imagenes, UrlUAM,5));
+        
+        /*************************	Tab 2	***************************/
+        Pattern patternConsejo = Pattern.compile("<span class=\"titulohome\">[A-Z0].*");
+        Pattern patternDetallesConsejo = Pattern.compile("app\\/ca\\/docs\\/[a-z0-9_-].*\\.pdf|http:\\/\\/consejoacademico.azc.uam.mx\\/mod\\/folder\\/view\\.php.*[0-9]");
+        List<String> consejo=getImages(patternConsejo, urlImagen);
+        List<String> detallesConsejo=getImages(patternDetallesConsejo, urlImagen);
+        
+        textConsejo1=(TextView)findViewById(R.id.textViewConsejo1);
+        textConsejo2=(TextView)findViewById(R.id.textViewConsejo2);
+        textConsejo3=(TextView)findViewById(R.id.textViewConsejo3);
+        textDetalleConsejo1=(TextView)findViewById(R.id.textViewDetalleConsejo1);
+        textDetalleConsejo2=(TextView)findViewById(R.id.textViewDetalleConsejo2);
+        textDetalleConsejo3=(TextView)findViewById(R.id.textViewDetalleConsejo3);
+        setConsejo(consejo, 3, textConsejo1);
+        setConsejo(consejo, 4, textConsejo2);
+        setConsejo(consejo, 5, textConsejo3);
+        setDetalle(detallesConsejo,UrlUAM+"/", 1, textDetalleConsejo1);
+        setDetalle(detallesConsejo,"", 2, textDetalleConsejo2);
+        setDetalle(detallesConsejo,UrlUAM+"/", 3, textDetalleConsejo3);
+        
+        /*************************	Tab 3	***************************/
+        Pattern patternActividades = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[A-Z-a-z0-9-_]*.(jpg|gif)");
+        
+        imageAgenda1=(ImageView)findViewById(R.id.imageAgenda1);
+        imageAgenda2=(ImageView)findViewById(R.id.imageAgenda2);
+        imageAgenda3=(ImageView)findViewById(R.id.imageAgenda3);
+        imageAgenda4=(ImageView)findViewById(R.id.imageAgenda4);
+        
+        /*************************	Tab 4	***************************/
+        Pattern patternNoticias = Pattern.compile("\\/privado\\/noticias\\/imagenes\\/[a-z0-9_A-Z]*\\.(jpg|gif)");
+        Pattern patternDetalleNoticias = Pattern.compile("\\/noticias\\.php\\?id=[a-z0-9\\&;=]*");
+        
+        imageNoticia1=(ImageView)findViewById(R.id.imageNoticia1);
+        imageNoticia2=(ImageView)findViewById(R.id.imageNoticia2);
+        
         
         Resources res = getResources();
         
@@ -192,7 +221,6 @@ public class Avisos extends Activity
 	    	HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
 	    	conn.connect();
 	    	loadedImage=(BitmapFactory.decodeStream(conn.getInputStream()));
-	    	//Log.w("imagenes", loadedImage.toString());
 	   	}
 	    catch (IOException e)
 	    {
@@ -206,7 +234,14 @@ public class Avisos extends Activity
 		imageHttpAddress=url+imagenes.get(index);
 		text.setText(Html.fromHtml("<a href="+imageHttpAddress+">Detalles ....</a>"));
 		text.setMovementMethod(LinkMovementMethod.getInstance());
-		Log.w("imagenes", imagenes.get(index).toString());
+	}
+	public void setConsejo(List<String> imagenes,Integer index,TextView text)
+	{
+		String newText=null;
+		newText=imagenes.get(index).replace("<span class=\"titulohome\">","");
+		newText=newText.replace("</span>","");
+		newText=newText.replace("<br>","");
+		text.setText(newText);
 	}
 
 }
