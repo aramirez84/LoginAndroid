@@ -43,6 +43,7 @@ public class Avisos extends Activity
     private TextView textConsejo1,textConsejo2,textConsejo3;
     private TextView textDetalleConsejo1,textDetalleConsejo2,textDetalleConsejo3;
     private ImageView imageAgenda1,imageAgenda2,imageAgenda3,imageAgenda4;
+    private TextView textAgenda1,textAgenda2,textAgenda3,textAgenda4;
     private ImageView imageNoticia1,imageNoticia2;
     private Bitmap loadedImage;
     
@@ -105,13 +106,22 @@ public class Avisos extends Activity
         setDetalle(detallesConsejo,UrlUAM+"/", 3, textDetalleConsejo3);
         
         /*************************	Tab 3	***************************/
-        Pattern patternActividades = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[A-Z-a-z0-9-_]*.(jpg|gif)");
-        
+        Pattern patternActividades = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[A-Z-a-z0-9-_\\s]*.(jpg|gif)");
+        List<String> actividades=getImages(patternActividades, urlImagen);
         imageAgenda1=(ImageView)findViewById(R.id.imageAgenda1);
         imageAgenda2=(ImageView)findViewById(R.id.imageAgenda2);
         imageAgenda3=(ImageView)findViewById(R.id.imageAgenda3);
         imageAgenda4=(ImageView)findViewById(R.id.imageAgenda4);
+        textAgenda1=(TextView)findViewById(R.id.textViewAgenda1);
+        textAgenda2=(TextView)findViewById(R.id.textViewAgenda2);
+        textAgenda3=(TextView)findViewById(R.id.textViewAgenda3);
+        textAgenda4=(TextView)findViewById(R.id.textViewAgenda4);
         
+        /*imageAgenda1.setImageBitmap(downloadImage(actividades, UrlUAM,0));
+        imageAgenda2.setImageBitmap(downloadImage(actividades, UrlUAM,1));
+        imageAgenda3.setImageBitmap(downloadImage(actividades, UrlUAM,2));
+        imageAgenda4.setImageBitmap(downloadImage(actividades, UrlUAM,3));
+        */
         /*************************	Tab 4	***************************/
         Pattern patternNoticias = Pattern.compile("\\/privado\\/noticias\\/imagenes\\/[a-z0-9_A-Z]*\\.(jpg|gif)");
         Pattern patternDetalleNoticias = Pattern.compile("\\/noticias\\.php\\?id=[a-z0-9\\&;=]*");
