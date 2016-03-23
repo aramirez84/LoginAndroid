@@ -106,7 +106,7 @@ public class Avisos extends Activity
         setDetalle(detallesConsejo,UrlUAM+"/", 3, textDetalleConsejo3);
         
         /*************************	Tab 3	***************************/
-        Pattern patternActividades = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[A-Z-a-z0-9-_\\s]*.(jpg|gif)");
+        Pattern patternActividades = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[A-Z-a-z0-9-_\\s]*.jpg");
         List<String> actividades=getImages(patternActividades, urlImagen);
         imageAgenda1=(ImageView)findViewById(R.id.imageAgenda1);
         imageAgenda2=(ImageView)findViewById(R.id.imageAgenda2);
@@ -117,14 +117,14 @@ public class Avisos extends Activity
         textAgenda3=(TextView)findViewById(R.id.textViewAgenda3);
         textAgenda4=(TextView)findViewById(R.id.textViewAgenda4);
         
-        imageAgenda1.setImageBitmap(downloadImage(actividades, UrlUAM,4));
-        imageAgenda2.setImageBitmap(downloadImage(actividades, UrlUAM,5));
-        imageAgenda3.setImageBitmap(downloadImage(actividades, UrlUAM,6));
-        imageAgenda4.setImageBitmap(downloadImage(actividades, UrlUAM,7));
-        //setDetalle(detalles, UrlUAM, 6, textAviso1);
-        //setDetalle(detalles, UrlUAM, 7, textAviso2);
-        //setDetalle(detalles, UrlUAM, 8, textAviso3);
-        //setDetalle(detalles, UrlUAM, 9, textAviso4);
+        imageAgenda1.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-4));
+        imageAgenda2.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-3));
+        imageAgenda3.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-2));
+        imageAgenda4.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-1));
+        setDetalle(detalles, UrlUAM, actividades.size()-4, textAgenda1);
+        setDetalle(detalles, UrlUAM, actividades.size()-3, textAgenda2);
+        setDetalle(detalles, UrlUAM, actividades.size()-2, textAgenda3);
+        setDetalle(detalles, UrlUAM, actividades.size()-1, textAgenda4);
         
         /*************************	Tab 4	***************************/
         Pattern patternNoticias = Pattern.compile("\\/privado\\/noticias\\/imagenes\\/[a-z0-9_A-Z]*\\.(jpg|gif)");
