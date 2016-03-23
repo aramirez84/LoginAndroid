@@ -59,7 +59,7 @@ public class Avisos extends Activity
         /*************************	Tab 1	***************************/
         Pattern pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.jpg|\\/coordinaciones\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.gif");
         List<String> imagenes=getImages(pattern, urlImagen);
-        Pattern patternDetalles = Pattern.compile("\\/agenda.*");
+        Pattern patternDetalles = Pattern.compile("\\/agenda.*div=1");
         List<String> detalles=getImages(patternDetalles, urlImagen);
         
         imageAviso1 = (ImageView) findViewById(R.id.imageAviso1);
@@ -74,11 +74,11 @@ public class Avisos extends Activity
         textAviso4=(TextView)findViewById(R.id.textViewAviso4);
         textAviso5=(TextView)findViewById(R.id.textViewAviso5);
                 
-        setDetalle(detalles, UrlUAM, 1, textAviso1);
-        setDetalle(detalles, UrlUAM, 2, textAviso2);
-        setDetalle(detalles, UrlUAM, 3, textAviso3);
-        setDetalle(detalles, UrlUAM, 4, textAviso4);
-        setDetalle(detalles, UrlUAM, 5, textAviso5);
+        setDetalle(detalles, UrlUAM, 0, textAviso1);
+        setDetalle(detalles, UrlUAM, 1, textAviso2);
+        setDetalle(detalles, UrlUAM, 2, textAviso3);
+        setDetalle(detalles, UrlUAM, 3, textAviso4);
+        setDetalle(detalles, UrlUAM, 4, textAviso5);
         
         imageAviso1.setImageBitmap(downloadImage(imagenes, UrlUAM,0));
         imageAviso2.setImageBitmap(downloadImage(imagenes, UrlUAM,1));
@@ -117,11 +117,15 @@ public class Avisos extends Activity
         textAgenda3=(TextView)findViewById(R.id.textViewAgenda3);
         textAgenda4=(TextView)findViewById(R.id.textViewAgenda4);
         
-        /*imageAgenda1.setImageBitmap(downloadImage(actividades, UrlUAM,0));
-        imageAgenda2.setImageBitmap(downloadImage(actividades, UrlUAM,1));
-        imageAgenda3.setImageBitmap(downloadImage(actividades, UrlUAM,2));
-        imageAgenda4.setImageBitmap(downloadImage(actividades, UrlUAM,3));
-        */
+        imageAgenda1.setImageBitmap(downloadImage(actividades, UrlUAM,4));
+        imageAgenda2.setImageBitmap(downloadImage(actividades, UrlUAM,5));
+        imageAgenda3.setImageBitmap(downloadImage(actividades, UrlUAM,6));
+        imageAgenda4.setImageBitmap(downloadImage(actividades, UrlUAM,7));
+        //setDetalle(detalles, UrlUAM, 6, textAviso1);
+        //setDetalle(detalles, UrlUAM, 7, textAviso2);
+        //setDetalle(detalles, UrlUAM, 8, textAviso3);
+        //setDetalle(detalles, UrlUAM, 9, textAviso4);
+        
         /*************************	Tab 4	***************************/
         Pattern patternNoticias = Pattern.compile("\\/privado\\/noticias\\/imagenes\\/[a-z0-9_A-Z]*\\.(jpg|gif)");
         Pattern patternDetalleNoticias = Pattern.compile("\\/noticias\\.php\\?id=[a-z0-9\\&;=]*");
@@ -226,7 +230,7 @@ public class Avisos extends Activity
 	    try
 	    {
 	    	imageHttpAddress = "";
-	    	imageHttpAddress=url+imagenes.get(index);
+	    	imageHttpAddress=url+imagenes.get(index).replace(" ","%20").replace("class=\"detalle\">Ver detalle>", "");
 	    	imageUrl = new URL(imageHttpAddress);
 	    	HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
 	    	conn.connect();
