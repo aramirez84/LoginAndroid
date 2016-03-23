@@ -50,56 +50,61 @@
  			            <ImageView
 		 			        android:id="@+id/imageAviso1"
 		 			        android:layout_width="fill_parent"
-		 			        android:layout_height="120dp"
-		 			        android:layout_marginTop="25dp" />
+		 			        android:layout_height="200dp"
+		 			        android:layout_marginTop="15dp" />
  			            <TextView
 		 			        android:id="@+id/textViewAviso1"
 		 			        android:layout_width="fill_parent"
 		 			        android:layout_height="wrap_content"
+		 			        android:layout_gravity="center"
 		 			        android:text="@string/detalles" />
 						
 		 			    <ImageView
 		 			        android:id="@+id/imageAviso2"
 		 			        android:layout_width="fill_parent"
-		 			        android:layout_height="120dp"
-		 			        android:layout_marginTop="25dp"/>
+		 			        android:layout_height="200dp"
+		 			        android:layout_marginTop="20dp"/>
 		 			    <TextView
 		 			        android:id="@+id/textViewAviso2"
 		 			        android:layout_width="fill_parent"
 		 			        android:layout_height="wrap_content"
+		 			        android:layout_gravity="center"
 		 			        android:text="@string/detalles" />
 		 			    
  			            <ImageView
 					        android:id="@+id/imageAviso3"
 					        android:layout_width="fill_parent"
-					        android:layout_height="120dp"
-					        android:layout_marginTop="25dp" />
+					        android:layout_height="200dp"
+					        android:layout_marginTop="20dp" />
 						<TextView
 		 			        android:id="@+id/textViewAviso3"
 		 			        android:layout_width="fill_parent"
 		 			        android:layout_height="wrap_content"
+		 			        android:layout_gravity="center"
 		 			        android:text="@string/detalles" />
 						
 					    <ImageView
 					        android:id="@+id/imageAviso4"
 					        android:layout_width="fill_parent"
-					        android:layout_height="120dp"
-					        android:layout_marginTop="25dp"/>
+					        android:layout_height="200dp"
+					        android:layout_marginTop="20dp"/>
 						<TextView
 		 			        android:id="@+id/textViewAviso4"
 		 			        android:layout_width="fill_parent"
 		 			        android:layout_height="wrap_content"
+		 			        android:layout_gravity="center"
 		 			        android:text="@string/detalles" />
 						
 					    <ImageView
 					        android:id="@+id/imageAviso5"
 					        android:layout_width="fill_parent"
-					        android:layout_height="120dp"
-					        android:layout_marginTop="25dp"/>
+					        android:layout_height="200dp"
+					        android:layout_marginTop="20dp"/>
 						<TextView
 		 			        android:id="@+id/textViewAviso5"
 		 			        android:layout_width="fill_parent"
 		 			        android:layout_height="wrap_content"
+		 			        android:layout_gravity="center"
 		 			        android:text="@string/detalles" />
 						
 
@@ -204,26 +209,50 @@
  			            <ImageView
 		 			        android:id="@+id/imageAgenda1"
 		 			        android:layout_width="fill_parent"
-		 			        android:layout_height="120dp"
+		 			        android:layout_height="200dp"
 		 			        android:layout_marginTop="25dp" />
+ 			            <TextView
+		 			        android:id="@+id/textViewAgenda1"
+		 			        android:layout_width="fill_parent"
+		 			        android:layout_height="wrap_content"
+		 			        android:layout_gravity="center"
+		 			        android:text="@string/detalles" />
 		
 		 			    <ImageView
 		 			        android:id="@+id/imageAgenda2"
 		 			        android:layout_width="fill_parent"
-		 			        android:layout_height="120dp"
+		 			        android:layout_height="200dp"
 		 			        android:layout_marginTop="25dp"/>
+		 			    <TextView
+		 			        android:id="@+id/textViewAgenda2"
+		 			        android:layout_width="fill_parent"
+		 			        android:layout_height="wrap_content"
+		 			        android:layout_gravity="center"
+		 			        android:text="@string/detalles" />
+ 			            
  			            <ImageView
 					        android:id="@+id/imageAgenda3"
 					        android:layout_width="fill_parent"
-					        android:layout_height="120dp"
+					        android:layout_height="200dp"
 					        android:layout_marginTop="25dp" />
+ 			            <TextView
+		 			        android:id="@+id/textViewAgenda3"
+		 			        android:layout_width="fill_parent"
+		 			        android:layout_height="wrap_content"
+		 			        android:layout_gravity="center"
+		 			        android:text="@string/detalles" />
 		
 					    <ImageView
 					        android:id="@+id/imageAgenda4"
 					        android:layout_width="fill_parent"
-					        android:layout_height="120dp"
+					        android:layout_height="200dp"
 					        android:layout_marginTop="25dp"/>
-		
+					    <TextView
+		 			        android:id="@+id/textViewAgenda4"
+		 			        android:layout_width="fill_parent"
+		 			        android:layout_height="wrap_content"
+		 			        android:layout_gravity="center"
+		 			        android:text="@string/detalles" />
 					    	    
  			        </LinearLayout>
  			    </ScrollView>
