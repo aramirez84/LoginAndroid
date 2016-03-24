@@ -284,12 +284,24 @@
 		 			        android:layout_width="fill_parent"
 		 			        android:layout_height="120dp"
 		 			        android:layout_marginTop="25dp" />
+ 			            <TextView
+		 			        android:id="@+id/textViewNoticia1"
+		 			        android:layout_width="fill_parent"
+		 			        android:layout_height="wrap_content"
+		 			        android:layout_gravity="center"
+		 			        android:text="@string/detalles" />
 		
 		 			    <ImageView
 		 			        android:id="@+id/imageNoticia2"
 		 			        android:layout_width="fill_parent"
 		 			        android:layout_height="120dp"
 		 			        android:layout_marginTop="25dp"/>
+		 			    <TextView
+		 			        android:id="@+id/textViewNoticia2"
+		 			        android:layout_width="fill_parent"
+		 			        android:layout_height="wrap_content"
+		 			        android:layout_gravity="center"
+		 			        android:text="@string/detalles" />
  			            	    
  			        </LinearLayout>
  			    </ScrollView>
