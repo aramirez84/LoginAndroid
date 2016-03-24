@@ -15,6 +15,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.w3c.dom.Text;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -45,6 +46,7 @@ public class Avisos extends Activity
     private ImageView imageAgenda1,imageAgenda2,imageAgenda3,imageAgenda4;
     private TextView textAgenda1,textAgenda2,textAgenda3,textAgenda4;
     private ImageView imageNoticia1,imageNoticia2;
+    private TextView textNoticia1,textNoticia2;
     private Bitmap loadedImage;
     
 	@Override
@@ -127,12 +129,19 @@ public class Avisos extends Activity
         setDetalle(detalles, UrlUAM, actividades.size()-1, textAgenda4);
         
         /*************************	Tab 4	***************************/
-        Pattern patternNoticias = Pattern.compile("\\/privado\\/noticias\\/imagenes\\/[a-z0-9_A-Z]*\\.(jpg|gif)");
+        Pattern patternNoticias = Pattern.compile("\\/privado\\/noticias\\/imagenes\\/[a-z0-9_A-Z-\\s]*\\.(jpg|gif)");
         Pattern patternDetalleNoticias = Pattern.compile("\\/noticias\\.php\\?id=[a-z0-9\\&;=]*");
+        List<String> noticias=getImages(patternNoticias, urlImagen);
+        List<String> detallesNoticias=getImages(patternDetalleNoticias, urlImagen);
         
         imageNoticia1=(ImageView)findViewById(R.id.imageNoticia1);
         imageNoticia2=(ImageView)findViewById(R.id.imageNoticia2);
-        
+        textNoticia1=(TextView)findViewById(R.id.textViewNoticia1);
+        textNoticia2=(TextView)findViewById(R.id.textViewNoticia2);
+        imageNoticia1.setImageBitmap(downloadImage(noticias, UrlUAM,0));
+        imageNoticia2.setImageBitmap(downloadImage(noticias, UrlUAM,1));
+        setDetalle(detallesNoticias, UrlUAM, 0, textNoticia1);
+        setDetalle(detallesNoticias, UrlUAM, 1, textNoticia2);
         
         Resources res = getResources();
         
@@ -205,6 +214,7 @@ public class Avisos extends Activity
 	    {
 	    	e.printStackTrace();
 	    }
+	    httpclient.getConnectionManager().shutdown();
 	    return str;
 	}
 	
