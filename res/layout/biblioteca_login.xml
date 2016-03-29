@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="@string/user"
+        android:text="@string/Bibliotecauser"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
     
     <EditText
@@ -32,7 +32,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
-        android:text="@string/password"
+        android:text="@string/Bibliotecapassword"
         android:textAppearance="?android:attr/textAppearanceLarge"/> 
         
 	<EditText
@@ -54,7 +54,7 @@
         android:layout_below="@+id/txt_password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:text="@string/btnLogin" /> 
+        android:text="@string/BibliotecabtnLogin" /> 
 	
 	<TextView 
 	    android:id="@+id/lbl_result"

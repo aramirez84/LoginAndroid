@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AndroidLogin</string>
-    <!-- Text button in login form -->
+    
+    <!-- Text in login form -->
     <string name="user">User Name</string>
     <string name="password">Password</string>
     <string name="btnLogin">Login</string>
@@ -29,4 +30,9 @@
     
     <!-- Details for tabs -->
     <string name="detalles">Detalles .....</string>
+    
+    <!-- Text in biblioteca login form -->
+    <string name="Bibliotecauser">Matricula</string>
+    <string name="Bibliotecapassword">Password</string>
+    <string name="BibliotecabtnLogin">Enviar</string>
 </resources>

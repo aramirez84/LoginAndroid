@@ -38,7 +38,7 @@ public class BibliotecaLogin extends Activity implements OnClickListener {
 	
 	private Button ok;
 	private TextView result;
-	private String urlLogin="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004.oIniSesWebLic?mod=1";
+	private String urlLogin="http://espartaco.azc.uam.mx/ALEPH";
 	
 	/** Called when the activity is first created. */
     @Override
@@ -61,7 +61,7 @@ public class BibliotecaLogin extends Activity implements OnClickListener {
         HttpClient httpclient = new DefaultHttpClient();
         
         
-        HttpPost httppost = new HttpPost(urlLogin);
+        HttpGet httppost = new HttpGet(urlLogin);
 
         try {
             // Add user name and password
@@ -71,36 +71,24 @@ public class BibliotecaLogin extends Activity implements OnClickListener {
         	EditText pword = (EditText)findViewById(R.id.txt_password);
         	String password = pword.getText().toString();
         	
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("SIGLAS_UNI_XX.E_UNIDAD.AE02.1","AZC"));
-            nameValuePairs.add(new BasicNameValuePair("%23.E_UNIDAD.AE02.1","AxJDMQ=="));
-            nameValuePairs.add(new BasicNameValuePair("%23CRC.E_UNIDAD.AE02.1","0000006B"));
-            nameValuePairs.add(new BasicNameValuePair("NOMBRE.IDENTIFICACION.NONMODELED", username));
-            nameValuePairs.add(new BasicNameValuePair("COMPLEMENTO.IDENTIFICACION.NONMODELED", password));
-            nameValuePairs.add(new BasicNameValuePair("GO.IDENTIFICACION.NONMODELED","Entrar"));
-            nameValuePairs.add(new BasicNameValuePair("%25.IDENTIFICACION.NONMODELED.1",""));
-            nameValuePairs.add(new BasicNameValuePair("%23.WEB_INFO.SW01.1","CxJDMjA5MzMwMDcy"));
-            nameValuePairs.add(new BasicNameValuePair("%23CRC.WEB_INFO.SW01.1","00000022"));
-            nameValuePairs.add(new BasicNameValuePair("%23.WEB_MOD_ASO.SW01.1",""));
-            nameValuePairs.add(new BasicNameValuePair("%23.USUARIO_ANEXO.SG02.1",""));
-            nameValuePairs.add(new BasicNameValuePair("%23.MODULO_UWAS.SAE01.1",""));
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            /*List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("func","login-session"));
+            nameValuePairs.add(new BasicNameValuePair("login_source","LOGIN-BOR"));
+            nameValuePairs.add(new BasicNameValuePair("bor_id", username));
+            nameValuePairs.add(new BasicNameValuePair("bor_verification", password));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));*/
 
             // Execute HTTP Post Request
             Log.w("SENCIDE", "Execute HTTP Post Request");
             response = httpclient.execute(httppost);
             String str = inputStreamToString(response.getEntity().getContent()).toString();
-            //Filtramos el atributo onload que nos da la valdiacion del formulario
-            Pattern pattern = Pattern.compile("(\\(.*?)\\)");
-            List<String> mensajes=getMensaje(pattern, str);
-            //Hacemos un segundo filto para obtener solo el mensaje de validacion del formualrio
-            Pattern pattern2 = Pattern.compile("[A-Z].*[a-z]");
-            List<String> mensajes2=getMensaje(pattern2, mensajes.get(1));
-            
-            Log.w("ALERTA",mensajes2.toString());
             //Log.w("SENCIDE", str);
+            //Filtramos el atributo onload que nos da la valdiacion del formulario
+            Pattern pattern = Pattern.compile("http:\\/\\/148.206.79.169:80\\/F\\/.*BOR-INFO");
+            List<String> mensajes=getMensaje(pattern, str);
             
-            if(mensajes.size()==2)
+            
+            /*if(mensajes.size()==2)
             {
             	//cookies = etCookies(response);
             	Log.w("SENCIDE", "TRUE");
@@ -114,7 +102,7 @@ public class BibliotecaLogin extends Activity implements OnClickListener {
             {
             	Log.w("SENCIDE", "FALSE");
             	result.setText(mensajes2.toString());            	
-            }
+            }*/
 
         } catch (ClientProtocolException e) {
         	e.printStackTrace();
@@ -160,13 +148,16 @@ public class BibliotecaLogin extends Activity implements OnClickListener {
 	
 	public List<String> getMensaje(Pattern pattern,String str)
 	{
+		String url=null;
 		Matcher matcher = pattern.matcher(str);
-        // Guardamos los mensajes que nos da en la variable mensaje
+		// Guardamos los mensajes que nos da en la variable mensaje
         List<String> mensajes = new ArrayList<String>();
         while(matcher.find()){
         	mensajes.add(matcher.group(0));
         }
-		return mensajes;
+        url=mensajes.get(0).substring(385);
+        Log.w("URL", url);
+        return mensajes;
 	}
 	 
 }

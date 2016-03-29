@@ -109,5 +109,10 @@ public class MenuApplication extends Activity implements OnClickListener{
 			Intent intent = new Intent(MenuApplication.this, Avisos.class);
         	startActivity(intent);
 		}
+		if(view == biblioteca)
+		{
+			Intent intent = new Intent(MenuApplication.this, BibliotecaLogin.class);
+        	startActivity(intent);
+		}
 	}	
 }
