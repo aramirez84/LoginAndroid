@@ -223,13 +223,13 @@ public class Avisos extends Activity
 		Matcher matcher = pattern.matcher(str);
 	    // Guardamos los mensajes que nos da en la variable mensaje
 	    List<String> mensajes = new ArrayList<String>();
-	    int i=0;
-	    Log.w("Regexp: ",pattern.toString());
+	    //int i=0;
+	    //Log.w("Regexp: ",pattern.toString());
 	    while(matcher.find())
 	    {
 	    	mensajes.add(matcher.group(0));
-	    	i=i+1;
-	       	Log.w("Get Recurso: "+i,matcher.group(0).toString());
+	    	//i=i+1;
+	       	//Log.w("Get Recurso: "+i,matcher.group(0).toString());
 	    }
 	    return mensajes;
 	}
