@@ -17,5 +17,6 @@
         <activity android:name="Horario"></activity>
         <activity android:name="Avisos"></activity>
         <activity android:name="ShowAvisos"></activity>
+        <activity android:name="BibliotecaLogin"></activity>
     </application>
 </manifest>
