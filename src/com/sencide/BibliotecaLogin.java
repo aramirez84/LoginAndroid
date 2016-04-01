@@ -1,39 +1,10 @@
 package com.sencide;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
 import android.app.Activity;
-import android.content.Intent;
-import android.net.ParseException;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class BibliotecaLogin extends Activity {
@@ -50,13 +21,35 @@ public class BibliotecaLogin extends Activity {
         
         WebView myWebView = (WebView) this.findViewById(R.id.webView);
         myWebView.getSettings().setJavaScriptEnabled(true);
+        myWebView.getSettings().setUseWideViewPort(true);
+        myWebView.setInitialScale(80);
+        //myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.setWebViewClient(new WebViewClient(){
         	@Override
         	public void onPageFinished(WebView mywebview, String url)
         	{
         		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TABLE')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
         		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TABLE')[1].widht='15%'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TABLE')[1].cellSpacing='1'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TABLE')[1].cellPadding='1'; })()");
+        		
+        		/*
+        		 mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[1].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[2].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[3].style.display='none'; })()");
+        		
+        		 mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByClassName('topbar')[0].style.display='none'; })()");
         		mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByClassName('middlebar')[0].style.display='none'; })()");
@@ -64,6 +57,7 @@ public class BibliotecaLogin extends Activity {
                         "document.getElementsByClassName('bottombar')[0].style.display='none'; })()");
         		mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByClassName('feedbackbar')[0].style.display='none'; })()");
+                        */
         	}
         });
         myWebView.loadUrl(urlLogin);
