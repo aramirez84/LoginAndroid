@@ -4,28 +4,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.http.Header;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,13 +28,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class AndroidLogin extends Activity implements OnClickListener {
 	
 	private Button ok;
-	private TextView alertas;
 	private ProgressBar pb;
 	private EditText uname,pword;
 	private String urlLogin="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004.oIniSesWebLic?mod=1";
@@ -59,9 +51,6 @@ public class AndroidLogin extends Activity implements OnClickListener {
         // Login button clicked
         ok = (Button)findViewById(R.id.btn_login);
         ok.setOnClickListener(this);
-        
-        alertas = (TextView)findViewById(R.id.lbl_result);
-        
     }
     
     @Override
@@ -177,7 +166,6 @@ public class AndroidLogin extends Activity implements OnClickListener {
 	            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 	            // Execute HTTP Post Request
-	            Log.w("SENCIDE", "Execute HTTP Horario Request");
 	            response = httpclient.execute(httppost);
 	            String str = inputStreamToString(response.getEntity().getContent()).toString();
 	            
@@ -319,28 +307,17 @@ public class AndroidLogin extends Activity implements OnClickListener {
 	            
 	            if(mensajes.size()==2)
 	            {
-	            	//cookies = etCookies(response);
-	            	/*Log.w("SENCIDE", "TRUE");
-	            	result.setText("Login successful");
-	            	Intent intent = new Intent(AndroidLogin.this, MenuApplication.class);
-	            	startActivity(intent);
-	            	uname.setText("");
-	            	pword.setText("");
-	            	result.setText("");*/
 	            	resultPost=Integer.toString(mensajes.size());
 	            }else
 	            {
-	            	/*
-	            	Log.w("SENCIDE", "FALSE");
-	            	result.setText(mensajes2.toString());*/
 	            	resultPost=mensajes2.toString();
 	            }
 
  
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
+				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 			}
 			return resultPost;
 			
@@ -351,7 +328,6 @@ public class AndroidLogin extends Activity implements OnClickListener {
 			pb.setVisibility(View.GONE);
 			if(result.equals("2"))
             {
-            	//cookies = etCookies(response);
             	Log.w("SENCIDE", "TRUE");
             	Intent intent = new Intent(AndroidLogin.this, MenuApplication.class);
             	startActivity(intent);
