@@ -30,8 +30,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class AndroidLogin extends Activity implements OnClickListener {
-	
+public class AndroidLogin extends Activity implements OnClickListener
+{
 	private Button ok;
 	private ProgressBar pb;
 	private EditText uname,pword;
@@ -40,8 +40,9 @@ public class AndroidLogin extends Activity implements OnClickListener {
 	Header coookies2;
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState)
+    {
+    	super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         uname = (EditText)findViewById(R.id.txt_username);
     	pword = (EditText)findViewById(R.id.txt_password);
@@ -54,54 +55,27 @@ public class AndroidLogin extends Activity implements OnClickListener {
     }
     
     @Override
-	public void onClick(View view) {
-		if(view == ok){
-			Toast.makeText(getApplicationContext(), "Validando datos....", Toast.LENGTH_SHORT).show();
+	public void onClick(View view)
+    {
+    	if(view == ok){
+    		Toast.makeText(getApplicationContext(), "Validando datos....", Toast.LENGTH_SHORT).show();
 			pb.setVisibility(View.VISIBLE);
 			new MyAsyncTask().execute(urlLogin);
 		}
 	}
 	
-    /*public void postLoginData() {
-    	
-        // Create a new HttpClient and Post Header
-        HttpClient httpclient = new DefaultHttpClient();
-        
-        
-        //HttpPost httppost = new HttpPost(urlLogin);
-
-        try {
-            // Add user name and password
-        	
-        } catch (ClientProtocolException e) {
-        	e.printStackTrace();
-        } catch (IOException e) {
-        	e.printStackTrace();
-        }
-        
-        HttpResponse responsePost = null;
-        try {
-            responsePost = httpclient.execute(httppost);
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-            } 
-     */
-    private StringBuilder inputStreamToString(InputStream is) {
+    private StringBuilder inputStreamToString(InputStream is){
     	String line = "";
     	StringBuilder total = new StringBuilder();
     	// Wrap a BufferedReader around the InputStream
     	BufferedReader rd = new BufferedReader(new InputStreamReader(is));
     	// Read response until the end
     	try {
-			while ((line = rd.readLine()) != null) { 
-				total.append(line); 
+    		while ((line = rd.readLine()) != null) {
+    			total.append(line); 
 			}
-		} catch (IOException e) {
+		}
+    	catch (IOException e) {
 			e.printStackTrace();
 		}
     	// Return full string
@@ -258,6 +232,7 @@ public class AndroidLogin extends Activity implements OnClickListener {
 	        */
 
 	    } 
+	
 	private class MyAsyncTask extends AsyncTask<String, Void, String>
 	{
 		
