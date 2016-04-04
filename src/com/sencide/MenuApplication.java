@@ -79,6 +79,7 @@ public class MenuApplication extends Activity implements OnClickListener{
 	}
 	 
 
+	@SuppressWarnings("unused")
 	public void cerrarSession() {
     	HttpResponse response = null;
         // Create a new HttpClient and Post Header
