@@ -4,13 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.TextView;
 
 public class BibliotecaLogin extends Activity {
 	
-	private Button ok;
-	private TextView result;
 	private String urlLogin="http://148.206.79.169/F/ULETN4R1JRS7TV3AR5HRCYNGNY2AUANJPEV5VBCNDNJB6VHXUF-11082?func=BOR-INFO";
 	
 	/** Called when the activity is first created. */
@@ -22,14 +18,16 @@ public class BibliotecaLogin extends Activity {
         WebView myWebView = (WebView) this.findViewById(R.id.webView);
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setUseWideViewPort(true);
-        myWebView.setInitialScale(80);
+        myWebView.setInitialScale(70);
         //myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.setWebViewClient(new WebViewClient(){
         	@Override
         	public void onPageFinished(WebView mywebview, String url)
         	{
         		mywebview.loadUrl("javascript:(function() { " +
-                        "document.getElementsByTagName('TABLE')[0].style.display='none'; })()");
+                        "alert(window.location); })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('topbar')[0].style.display='none'; })()");
         		mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
         		mywebview.loadUrl("javascript:(function() { " +
@@ -39,8 +37,14 @@ public class BibliotecaLogin extends Activity {
         		mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TABLE')[1].cellPadding='1'; })()");
         		
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('topbar2')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('bottombar')[0].style.display='none'; })()");
+        		        		
         		/*
-        		 mywebview.loadUrl("javascript:(function() { " +
+        		 *
+        		mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('BR')[0].style.display='none'; })()");
         		mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('BR')[1].style.display='none'; })()");
@@ -49,15 +53,7 @@ public class BibliotecaLogin extends Activity {
         		mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('BR')[3].style.display='none'; })()");
         		
-        		 mywebview.loadUrl("javascript:(function() { " +
-                        "document.getElementsByClassName('topbar')[0].style.display='none'; })()");
-        		mywebview.loadUrl("javascript:(function() { " +
-                        "document.getElementsByClassName('middlebar')[0].style.display='none'; })()");
-        		mywebview.loadUrl("javascript:(function() { " +
-                        "document.getElementsByClassName('bottombar')[0].style.display='none'; })()");
-        		mywebview.loadUrl("javascript:(function() { " +
-                        "document.getElementsByClassName('feedbackbar')[0].style.display='none'; })()");
-                        */
+        		        */
         	}
         });
         myWebView.loadUrl(urlLogin);
