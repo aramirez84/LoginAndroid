@@ -14,12 +14,15 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 public class BibliotecaLogin extends Activity {
 	private String urlLogin="http://espartaco.azc.uam.mx/ALEPH";
@@ -53,7 +56,7 @@ public class BibliotecaLogin extends Activity {
     	return total;
     	}
  
-    public List<String> getMensaje(Pattern pattern,String str)
+    public String getMensaje(Pattern pattern,String str)
     {
     	String url=null;
     	Matcher matcher = pattern.matcher(str);
@@ -62,9 +65,9 @@ public class BibliotecaLogin extends Activity {
            while(matcher.find()){
            	mensajes.add(matcher.group(0));
            }
-           url=mensajes.get(0).substring(385);
+           url=mensajes.get(0).substring(385).replace("ef=\"","");
            Log.w("URL", url);
-           return mensajes;
+           return url;
     }
     
 	private class MyAsyncTask extends AsyncTask<String, String, String>
@@ -89,7 +92,7 @@ public class BibliotecaLogin extends Activity {
 				//Log.w("SENCIDE", str);
 				//Filtramos el atributo onload que nos da la valdiacion del formulario
 				Pattern pattern = Pattern.compile("http:\\/\\/148.206.79.169:80\\/F\\/.*BOR-INFO");
-				List<String> mensajes=getMensaje(pattern, str);
+				resultPost=getMensaje(pattern, str);
 				             
 			} catch (ClientProtocolException e) {
 				
@@ -106,7 +109,7 @@ public class BibliotecaLogin extends Activity {
 	        myWebView.getSettings().setUseWideViewPort(true);
 	        myWebView.setInitialScale(70);
 	        //myWebView.getSettings().setLoadWithOverviewMode(true);
-	        myWebView.setWebViewClient(new WebViewClient(){
+	        myWebView.setWebViewClient(new MyWebViewClient(){
 	        	@Override
 	        	public void onPageFinished(WebView mywebview, String url)
 	        	{
@@ -125,6 +128,9 @@ public class BibliotecaLogin extends Activity {
 	                        "document.getElementsByClassName('topbar2')[0].style.display='none'; })()");
 	        		mywebview.loadUrl("javascript:(function() { " +
 	                        "document.getElementsByClassName('bottombar')[0].style.display='none'; })()");
+	        		mywebview.loadUrl("javascript:(function() { " +
+	                        "document.getElementsByClassName('td2')[0].style.display='none'; })()");
+	        		
 	        		        		
 	        		/*
 	        		 *
@@ -147,5 +153,33 @@ public class BibliotecaLogin extends Activity {
  
 	}
 
-   	 
+	private class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        	Toast.makeText(getApplicationContext(), "Cargando: "+url, Toast.LENGTH_SHORT).show();
+           view.loadUrl(url);
+           return true;
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            Toast.makeText(getApplicationContext(), "Iniciando: "+url, Toast.LENGTH_SHORT).show();
+            //You can add some custom functionality here
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            Toast.makeText(getApplicationContext(), "Finalizando: "+url, Toast.LENGTH_SHORT).show();
+          //You can add some custom functionality here
+        }
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode,
+                String description, String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+          //You can add some custom functionality here
+        }
+     } 
 }
