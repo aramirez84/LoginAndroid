@@ -28,6 +28,7 @@ public class BibliotecaLogin extends Activity {
 	private String urlLogin="http://espartaco.azc.uam.mx/ALEPH";
 	//private String urlLogin="http://148.206.79.169/F/ULETN4R1JRS7TV3AR5HRCYNGNY2AUANJPEV5VBCNDNJB6VHXUF-11082?func=BOR-INFO";
 	private WebView myWebView;
+	private Pattern pattern;
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,7 @@ public class BibliotecaLogin extends Activity {
 				String str = inputStreamToString(response.getEntity().getContent()).toString();
 				//Log.w("SENCIDE", str);
 				//Filtramos el atributo onload que nos da la valdiacion del formulario
-				Pattern pattern = Pattern.compile("http:\\/\\/148.206.79.169:80\\/F\\/.*BOR-INFO");
+				pattern = Pattern.compile("http:\\/\\/148.206.79.169:80\\/F\\/.*BOR-INFO");
 				resultPost=getMensaje(pattern, str);
 				             
 			} catch (ClientProtocolException e) {
@@ -109,43 +110,8 @@ public class BibliotecaLogin extends Activity {
 	        myWebView.getSettings().setUseWideViewPort(true);
 	        myWebView.setInitialScale(70);
 	        //myWebView.getSettings().setLoadWithOverviewMode(true);
-	        myWebView.setWebViewClient(new MyWebViewClient(){
-	        	@Override
-	        	public void onPageFinished(WebView mywebview, String url)
-	        	{
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByClassName('topbar')[0].style.display='none'; })()");
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByTagName('TABLE')[1].widht='15%'; })()");
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByTagName('TABLE')[1].cellSpacing='1'; })()");
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByTagName('TABLE')[1].cellPadding='1'; })()");
-	        		
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByClassName('topbar2')[0].style.display='none'; })()");
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByClassName('bottombar')[0].style.display='none'; })()");
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByClassName('td2')[0].style.display='none'; })()");
-	        		
-	        		        		
-	        		/*
-	        		 *
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByTagName('BR')[0].style.display='none'; })()");
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByTagName('BR')[1].style.display='none'; })()");
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByTagName('BR')[2].style.display='none'; })()");
-	        		mywebview.loadUrl("javascript:(function() { " +
-	                        "document.getElementsByTagName('BR')[3].style.display='none'; })()");
-	        		
-	        		        */
-	        	}
-	        });
+	        myWebView.setWebViewClient(new MyWebViewClient());
+	        //myWebView.setWebViewClient(new WebViewClient());
 	        myWebView.loadUrl(result);
 	    
 		}
@@ -154,24 +120,358 @@ public class BibliotecaLogin extends Activity {
 	}
 
 	private class MyWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        	Toast.makeText(getApplicationContext(), "Cargando: "+url, Toast.LENGTH_SHORT).show();
-           view.loadUrl(url);
+		private String urlLogibBiblioteca="http:\\/\\/148.206.79.169:80\\/F\\/.*BOR-INFO";
+		private String urlRenovarPrestamo="http:\\/\\/148.206.79.169:80\\/F\\/.*bor-loan";
+		private String urlDatosBibliotca="http:\\/\\/148.206.79.169:80\\/F\\/.*";
+		
+		@Override
+        public boolean shouldOverrideUrlLoading(WebView mywebview, String url) {
+        	Pattern pat = Pattern.compile(urlLogibBiblioteca);
+			Matcher mat = pat.matcher(url);
+			
+			Pattern pat2 = Pattern.compile(urlRenovarPrestamo);
+			Matcher mat2 = pat2.matcher(url);
+			
+			Pattern pat3 = Pattern.compile(urlDatosBibliotca);
+			Matcher mat3 = pat3.matcher(url);
+			
+			Toast.makeText(getApplicationContext(), "Cargando: "+url, Toast.LENGTH_SHORT).show();
+            if (mat.matches() && !mat2.matches() && mat3.matches()) {
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[1].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[3].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[5].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[1].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[2].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TABLE')[1].width=20; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
+            }
+            if (mat.matches() && mat2.matches() && mat3.matches()) {
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[2].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[3].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[4].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[6].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[7].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[8].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[9].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[10].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[11].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[12].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[13].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[1].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[2].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[3].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('HR')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('SPAN')[2].width=20; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
+            }
+            if (!mat.matches() && mat2.matches() && mat3.matches()) {
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[2].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[3].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[4].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[4].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[5].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[6].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[7].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[23].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[24].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[25].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[26].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[31].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[32].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[33].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[34].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
+            }
+            else {
+                System.out.println(url);
+            }
+        	//view.loadUrl(url);
            return true;
         }
 
         @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
+        public void onPageStarted(WebView mywebview, String url, Bitmap favicon) {
+            super.onPageStarted(mywebview, url, favicon);
+            Pattern pat = Pattern.compile(urlLogibBiblioteca);
+            Matcher mat = pat.matcher(url);
+            
+            Pattern pat2 = Pattern.compile(urlRenovarPrestamo);
+			Matcher mat2 = pat2.matcher(url);
+			
+			Pattern pat3 = Pattern.compile(urlRenovarPrestamo);
+			Matcher mat3 = pat3.matcher(url);
             Toast.makeText(getApplicationContext(), "Iniciando: "+url, Toast.LENGTH_SHORT).show();
+        	
+            
+            if (mat.matches() && !mat2.matches() && mat3.matches()) {
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[1].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[3].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[5].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[1].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[2].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TABLE')[1].width=20; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
+            }
+            if (mat.matches() && mat2.matches() && mat3.matches()) {
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[2].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[3].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[4].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[6].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[7].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[8].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[9].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[10].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[11].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[12].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[13].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[1].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[2].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[3].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('HR')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('SPAN')[2].width=20; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
+            }
+            if (!mat.matches() && mat2.matches() && mat3.matches()) {
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[2].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[3].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[4].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[4].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[5].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[6].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[7].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[23].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[24].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[25].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[26].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[31].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[32].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[33].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[34].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
+            }
+            else {
+                System.out.println(url);
+            }
             //You can add some custom functionality here
         }
 
         @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-            Toast.makeText(getApplicationContext(), "Finalizando: "+url, Toast.LENGTH_SHORT).show();
+        public void onPageFinished(WebView mywebview, String url) {
+            super.onPageFinished(mywebview, url);
+            Pattern pat = Pattern.compile(urlLogibBiblioteca);
+            Matcher mat = pat.matcher(url);
+            Pattern pat2 = Pattern.compile(urlRenovarPrestamo);
+			Matcher mat2 = pat2.matcher(url);
+			Pattern pat3 = Pattern.compile(urlRenovarPrestamo);
+			Matcher mat3 = pat3.matcher(url);
+            
+			if (mat.matches() && !mat2.matches() && mat3.matches()) {
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[1].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[3].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[5].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[1].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[2].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TABLE')[1].width=20; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
+            }
+            if (mat.matches() && mat2.matches() && mat3.matches()) {
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[2].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[3].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[4].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[6].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[7].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[8].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[9].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[10].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[11].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[12].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[13].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[1].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[2].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('BR')[3].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('HR')[0].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('SPAN')[2].width=20; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
+            }
+            if (!mat.matches() && mat2.matches() && mat3.matches()) {
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[0].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[2].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[3].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TR')[4].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[4].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[5].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[6].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TH')[7].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[23].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[24].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[25].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[26].style.display='none'; })()");
+            	mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[31].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[32].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[33].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('TD')[34].style.display='none'; })()");
+        		mywebview.loadUrl("javascript:(function() { " +
+                        "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
+            }
+            else {
+                System.out.println(url);
+            }
+            
+            
           //You can add some custom functionality here
         }
 
