@@ -123,6 +123,8 @@ public class BibliotecaLogin extends Activity {
 		private String urlLogibBiblioteca="http:\\/\\/148.206.79.169:80\\/F\\/.*BOR-INFO";
 		private String urlRenovarPrestamo="http:\\/\\/148.206.79.169:80\\/F\\/.*bor-loan";
 		private String urlDetallesPrestamo="http:\\/\\/148.206.79.169:80\\/F\\/.*library=AZC50";
+		private String urlBiblioteca="[0-9]{5}[^\\?=\\d&]";
+		
 		
 		@Override
         public boolean shouldOverrideUrlLoading(WebView mywebview, String url) {
@@ -135,10 +137,14 @@ public class BibliotecaLogin extends Activity {
 			Pattern pat3 = Pattern.compile(urlDetallesPrestamo);
 			Matcher mat3 = pat3.matcher(url);
 			
+			Pattern pat4 = Pattern.compile(urlBiblioteca);
+			Matcher mat4 = pat4.matcher(url);
+			
 			
 			Toast.makeText(getApplicationContext(), "Cargando: "+url, Toast.LENGTH_SHORT).show();
-            
+			Log.w("Length",Integer.toString(url.length()));
 			if (mat.matches()) {
+				Log.w("match",urlLogibBiblioteca);
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
             	mywebview.loadUrl("javascript:(function() { " +
@@ -165,6 +171,7 @@ public class BibliotecaLogin extends Activity {
                         "document.getElementsByTagName('TABLE')[1].width=20; })()");
             }
 			if (mat2.matches()) {
+				Log.w("match",urlRenovarPrestamo);
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
             	mywebview.loadUrl("javascript:(function() { " +
@@ -200,6 +207,7 @@ public class BibliotecaLogin extends Activity {
             }
 			if(mat3.matches())
             {
+				Log.w("match",urlDetallesPrestamo);
 				mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
 				mywebview.loadUrl("javascript:(function() { " +
@@ -209,9 +217,9 @@ public class BibliotecaLogin extends Activity {
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('IMG')[1].style.display='none'; })()");
             }
-			/*
-			else
+			if(url.length()==80)
 			{
+				Log.w("match",urlBiblioteca);
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
             	mywebview.loadUrl("javascript:(function() { " +
@@ -251,7 +259,6 @@ public class BibliotecaLogin extends Activity {
         		mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
             }
-            */
         	mywebview.loadUrl(url);
            return true;
         }
@@ -268,10 +275,14 @@ public class BibliotecaLogin extends Activity {
 			Pattern pat3 = Pattern.compile(urlDetallesPrestamo);
 			Matcher mat3 = pat3.matcher(url);
 			
+			Pattern pat4 = Pattern.compile(urlBiblioteca);
+			Matcher mat4 = pat4.matcher(url);
+			
 			Toast.makeText(getApplicationContext(), "Iniciando: "+url, Toast.LENGTH_SHORT).show();
-        	
+			Log.w("Length",Integer.toString(url.length()));
             
             if (mat.matches()) {
+            	Log.w("match",urlLogibBiblioteca);
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
             	mywebview.loadUrl("javascript:(function() { " +
@@ -298,6 +309,7 @@ public class BibliotecaLogin extends Activity {
                         "document.getElementsByTagName('TABLE')[1].width=20; })()");
             }
             if (mat2.matches()) {
+            	Log.w("match",urlRenovarPrestamo);
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
             	mywebview.loadUrl("javascript:(function() { " +
@@ -333,6 +345,7 @@ public class BibliotecaLogin extends Activity {
             }
             if(mat3.matches())
             {
+            	Log.w("match",urlDetallesPrestamo);
 				mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
 				mywebview.loadUrl("javascript:(function() { " +
@@ -342,9 +355,9 @@ public class BibliotecaLogin extends Activity {
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('IMG')[1].style.display='none'; })()");
             }
-            /*
-            else
+            if(url.length()==80)
             {
+            	Log.w("match",urlBiblioteca);
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
             	mywebview.loadUrl("javascript:(function() { " +
@@ -383,7 +396,7 @@ public class BibliotecaLogin extends Activity {
                         "document.getElementsByTagName('SPAN')[2].width=20; })()");
         		mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
-            }*/
+            }
         }
 
         @Override
@@ -398,7 +411,13 @@ public class BibliotecaLogin extends Activity {
 			Pattern pat3 = Pattern.compile(urlDetallesPrestamo);
 			Matcher mat3 = pat3.matcher(url);
 			
+			Pattern pat4 = Pattern.compile(urlBiblioteca);
+			Matcher mat4 = pat4.matcher(url);
+			
+			Log.w("Length",Integer.toString(url.length()));
+						
 			if (mat.matches()) {
+				Log.w("match",urlLogibBiblioteca);
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
             	mywebview.loadUrl("javascript:(function() { " +
@@ -425,6 +444,7 @@ public class BibliotecaLogin extends Activity {
                         "document.getElementsByTagName('TABLE')[1].width=20; })()");
             }
 			if (mat2.matches()) {
+				Log.w("match",urlRenovarPrestamo);
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
             	mywebview.loadUrl("javascript:(function() { " +
@@ -460,6 +480,7 @@ public class BibliotecaLogin extends Activity {
             }
 			if(mat3.matches())
             {
+				Log.w("match",urlDetallesPrestamo);
 				mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
 				mywebview.loadUrl("javascript:(function() { " +
@@ -469,8 +490,9 @@ public class BibliotecaLogin extends Activity {
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('IMG')[1].style.display='none'; })()");
             }
-			/*else
-            {
+			if(url.length()==80)
+			{
+				
             	mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByTagName('TR')[0].style.display='none'; })()");
             	mywebview.loadUrl("javascript:(function() { " +
@@ -509,7 +531,7 @@ public class BibliotecaLogin extends Activity {
                         "document.getElementsByTagName('SPAN')[2].width=20; })()");
         		mywebview.loadUrl("javascript:(function() { " +
                         "document.getElementsByClassName('copyright')[0].style.display='none'; })()");
-            }*/
+            }
         }
 
         @Override
