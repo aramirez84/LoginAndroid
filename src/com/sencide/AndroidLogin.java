@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -18,6 +17,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -36,8 +37,8 @@ public class AndroidLogin extends Activity implements OnClickListener
 	private ProgressBar pb;
 	private EditText uname,pword;
 	private String urlLogin="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004.oIniSesWebLic?mod=1";
-	String urlHorario="https://ayamictlan.uam.mx:8443/sae/azc/IEWBC002.oConsulta";
-	Header coookies2;
+	HttpClient httpclient = new DefaultHttpClient();
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -99,139 +100,6 @@ public class AndroidLogin extends Activity implements OnClickListener
         }
 		return mensajes;
 	}
-	 
-	public void horario(HttpResponse responsePost) {
-	    	HttpResponse response = null;
-	        HttpClient httpclient = new DefaultHttpClient();
-	        HttpPost httppost = new HttpPost(urlHorario);
-	        Header[] cookies = responsePost.getHeaders("Set-Cookie");
-	        
-	        for (Header c : cookies)
-	        {
-	        	httppost.addHeader("Cookie", c.getValue());
-	        	Log.w("cookie", c.getValue().toString());
-	        }
-	        try 
-	        {
-	        	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-	            nameValuePairs.add(new BasicNameValuePair("ENCABEZADO.PROCESO_CAL.AE02.1",""));
-	            nameValuePairs.add(new BasicNameValuePair("%23.PROCESO_CAL.AE02.1",""));
-	            nameValuePairs.add(new BasicNameValuePair("%23CRC.PROCESO_CAL.AE02.1",""));
-	            nameValuePairs.add(new BasicNameValuePair("TRIMESTRE_XX.TRIMESTRE.AE02.1", ""));
-	            nameValuePairs.add(new BasicNameValuePair("%23.TRIMESTRE.AE02.1", ""));
-	            nameValuePairs.add(new BasicNameValuePair("%23CRC.TRIMESTRE.AE02.1",""));
-	            nameValuePairs.add(new BasicNameValuePair("CD_DIA1.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("CD_DIA2.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("CD_DIA3.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("CD_DIA4.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("CD_DIA5.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("CVE_UEA_CL.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("%23.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("%23CRC.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("NOM_UEA_NO.E_UEA.PE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("%23.E_UEA.PE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("%23CRC.E_UEA.PE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("CD_PROFESOR.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("CVE_GRUPO_CL.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("%23.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("%23CRC.INSCRITOS.AE02.1-1",""));
-	            nameValuePairs.add(new BasicNameValuePair("%23.PROCESO_CAL.AE02.1",""));
-	            nameValuePairs.add(new BasicNameValuePair("%23CRC.PROCESO_CAL.AE02.1",""));
-	            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-	            // Execute HTTP Post Request
-	            response = httpclient.execute(httppost);
-	            String str = inputStreamToString(response.getEntity().getContent()).toString();
-	            
-	            Log.w("Horario",str);
-	            //Log.w("SENCIDE", str);
-	            
-	            
-	        } catch (ClientProtocolException e) {
-	        	e.printStackTrace();
-	        } catch (IOException e) {
-	        	e.printStackTrace();
-	        }
-	        
-	        /*HttpResponse responsePost = null;
-	        try {
-	            responsePost = httpclient.execute(httppost);
-	        } catch (ClientProtocolException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	        }
-	        Header[] cookies = responsePost.getHeaders("Set-Cookie");
-	        
-	        for(int i=1;i<cookies.length;i++ )
-	        {
-	        	coookies2=cookies[i];
-	        }
-	        String urlHorario="https://ayamictlan.uam.mx:8443/sae/azc/IEWBC002.oConsulta";
-	        HttpGet httpget = new HttpGet(urlHorario);
-	        HttpGet httpget2 = new HttpGet("https://ayamictlan.uam.mx:8443/sae/azc/IEWBC002.oConsulta");
-
-	        for (Header c : cookies) {
-	                httpget.addHeader("Cookie", c.getValue());
-	        }
-
-	        //for (Header c : cookies) {
-	            httpget2.addHeader("Cookie", coookies2.toString());
-	            Log.w("Header Cookie2", coookies2.toString());
-	        //}
-	        
-	        HttpResponse responseGet = null;
-	        try {
-	                responseGet = httpclient.execute(httpget);
-	        } catch (ClientProtocolException e) {
-	                // TODO Auto-generated catch block
-	                e.printStackTrace();
-	        } catch (IOException e) {
-	                // TODO Auto-generated catch block
-	                e.printStackTrace();
-	        }
-	        HttpEntity ent=responseGet.getEntity();
-
-	        try {
-	                horario=EntityUtils.toString(ent);
-	        } catch (ParseException e) {
-	                // TODO Auto-generated catch block
-	                e.printStackTrace();
-	        } catch (IOException e) {
-	                // TODO Auto-generated catch block
-	                e.printStackTrace();
-	        }
-	        //System.out.println(horario);
-	        
-	        try {
-	            responseGet = httpclient.execute(httpget2);
-		    } catch (ClientProtocolException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		    } catch (IOException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		    }
-		    ent=responseGet.getEntity();
-		
-		    try {
-		            Informacion_Academica=EntityUtils.toString(ent);
-		    } catch (ParseException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		    } catch (IOException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		    }
-		    
-	        System.out.println(Informacion_Academica);
-	        
-	        httpclient.getConnectionManager().shutdown();
-	        */
-
-	    } 
 	
 	private class MyAsyncTask extends AsyncTask<String, Void, String>
 	{
@@ -241,12 +109,13 @@ public class AndroidLogin extends Activity implements OnClickListener
 		protected String doInBackground(String... params)
 		{
 			HttpResponse response = null;
+			
 			List<String> mensajes2=null;
 			String resultPost=null;
 			// Create a new HttpClient and Post Header
-			HttpClient httpclient = new DefaultHttpClient();
+			
 			HttpPost httppost = new HttpPost(params[0]);
- 
+			
 			try {
 				String username = uname.getText().toString();
 				String password = pword.getText().toString();
@@ -264,7 +133,7 @@ public class AndroidLogin extends Activity implements OnClickListener
 	            nameValuePairs.add(new BasicNameValuePair("%23.WEB_MOD_ASO.SW01.1",""));
 	            nameValuePairs.add(new BasicNameValuePair("%23.USUARIO_ANEXO.SG02.1",""));
 	            nameValuePairs.add(new BasicNameValuePair("%23.MODULO_UWAS.SAE01.1",""));
-	            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs,HTTP.UTF_8));
 
 	            // Execute HTTP Post Request
 	            Log.w("SENCIDE", "Execute HTTP Post Request");
@@ -279,7 +148,6 @@ public class AndroidLogin extends Activity implements OnClickListener
 	            
 	            Log.w("ALERTA",mensajes2.toString());
 	            //Log.w("SENCIDE", str);
-	            
 	            if(mensajes.size()==2)
 	            {
 	            	resultPost=Integer.toString(mensajes.size());
@@ -287,8 +155,6 @@ public class AndroidLogin extends Activity implements OnClickListener
 	            {
 	            	resultPost=mensajes2.toString();
 	            }
-
- 
 			} catch (ClientProtocolException e) {
 				
 			} catch (IOException e) {
