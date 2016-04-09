@@ -3,29 +3,18 @@ package com.sencide;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
 
 public class Horario extends Activity
 {
-	private List<String> cookies;
 	private TextView horario;
 	String horarioHtml=null;
     @Override
@@ -34,7 +23,7 @@ public class Horario extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.horario);
         Bundle bundle = getIntent().getExtras();
-        cookies=bundle.getStringArrayList("cookies");
+        bundle.getStringArrayList("cookies");
         horario = (TextView)findViewById(R.id.horario);
         //horarioHtml = getHorario();
         horario.setText(Html.fromHtml(horarioHtml));

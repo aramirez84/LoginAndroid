@@ -14,7 +14,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -104,6 +104,7 @@ public class BibliotecaLogin extends Activity {
 			
 		}
  
+		@SuppressLint("SetJavaScriptEnabled")
 		protected void onPostExecute(String result)
 		{
 			myWebView.getSettings().setJavaScriptEnabled(true);
@@ -138,7 +139,7 @@ public class BibliotecaLogin extends Activity {
 			Matcher mat3 = pat3.matcher(url);
 			
 			Pattern pat4 = Pattern.compile(urlBiblioteca);
-			Matcher mat4 = pat4.matcher(url);
+			pat4.matcher(url);
 			
 			
 			Toast.makeText(getApplicationContext(), "Cargando: "+url, Toast.LENGTH_SHORT).show();
@@ -263,7 +264,7 @@ public class BibliotecaLogin extends Activity {
 			Matcher mat3 = pat3.matcher(url);
 			
 			Pattern pat4 = Pattern.compile(urlBiblioteca);
-			Matcher mat4 = pat4.matcher(url);
+			pat4.matcher(url);
 			
 			Toast.makeText(getApplicationContext(), "Iniciando: "+url, Toast.LENGTH_SHORT).show();
 			Log.w("Length",Integer.toString(url.length()));
@@ -399,7 +400,7 @@ public class BibliotecaLogin extends Activity {
 			Matcher mat3 = pat3.matcher(url);
 			
 			Pattern pat4 = Pattern.compile(urlBiblioteca);
-			Matcher mat4 = pat4.matcher(url);
+			pat4.matcher(url);
 			
 			Log.w("Length",Integer.toString(url.length()));
 						
