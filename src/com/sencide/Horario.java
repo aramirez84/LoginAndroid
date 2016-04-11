@@ -16,15 +16,19 @@ import org.apache.http.client.methods.HttpGet;
 public class Horario extends Activity
 {
 	private TextView horario;
-	String horarioHtml=null;
+	private String horarioHtml=null;
+	private String user,password;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.horario);
-        Bundle bundle = getIntent().getExtras();
-        bundle.getStringArrayList("cookies");
-        horario = (TextView)findViewById(R.id.horario);
+        Bundle datos =getIntent().getExtras();
+        user =datos.getString("user");
+        password= datos.getString("pass");
+        Log.w("Usuario", user);
+        Log.w("Password", password);
+        /*horario = (TextView)findViewById(R.id.horario);
         //horarioHtml = getHorario();
         horario.setText(Html.fromHtml(horarioHtml));
         Tabla tabla = new Tabla(this, (TableLayout)findViewById(R.id.tabla));
@@ -38,19 +42,6 @@ public class Horario extends Activity
             elementos.add("Casilla [" + i + ", 2]");
             elementos.add("Casilla [" + i + ", 3]");
             tabla.agregarFilaTabla(elementos);
-        }
+        }*/
     }
-    
-    
-    public HttpGet setCookies(List<String> cookies,HttpGet httpget)
-	{
-		for (int i=0;i<cookies.size();i++)
-		{
-			Log.w("cookies Horario", cookies.get(i));
-			httpget.addHeader("Cookie", cookies.get(i));
-		}
-		return httpget;
-	}
-    
-
 }

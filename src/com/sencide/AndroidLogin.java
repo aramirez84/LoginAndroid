@@ -171,6 +171,8 @@ public class AndroidLogin extends Activity implements OnClickListener
             {
             	Log.w("SENCIDE", "TRUE");
             	Intent intent = new Intent(AndroidLogin.this, MenuApplication.class);
+            	intent.putExtra("user",uname.getText().toString());
+            	intent.putExtra("pass",pword.getText().toString());
             	startActivity(intent);
             	uname.setText("");
             	pword.setText("");

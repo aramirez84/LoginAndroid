@@ -27,7 +27,7 @@ public class MenuApplication extends Activity implements OnClickListener{
 	//private List<String> cookies;
 	private ProgressBar pb;
 	private Button horario,biblioteca,avisos,contactos;
-	
+	private String user,pass;
 	@Override
     public void onCreate(Bundle savedInstanceState)
 	{
@@ -35,7 +35,10 @@ public class MenuApplication extends Activity implements OnClickListener{
         setContentView(R.layout.menuapplication);
         pb=(ProgressBar)findViewById(R.id.progressBar1);
 		pb.setVisibility(View.GONE);
-        horario = (Button)findViewById(R.id.btn_horario);
+        Bundle datos =getIntent().getExtras();
+        user =datos.getString("user");
+        pass= datos.getString("pass");
+		horario = (Button)findViewById(R.id.btn_horario);
         biblioteca=(Button)findViewById(R.id.btn_biblioteca);
         avisos=(Button)findViewById(R.id.btn_avisos);
         contactos=(Button)findViewById(R.id.btn_contactos);
@@ -136,9 +139,10 @@ public class MenuApplication extends Activity implements OnClickListener{
 			pb.setVisibility(View.GONE);
 			if(result.equals("Horario"))
             {
-				//Intent intent = new Intent(MenuApplication.this, Horario.class);
-	        	//intent.putStringArrayListExtra("cookies", (ArrayList<String>) cookies);
-	        	//startActivity(intent);
+				Intent intent = new Intent(MenuApplication.this, Horario.class);
+				intent.putExtra("user",user);
+            	intent.putExtra("pass",pass);
+            	startActivity(intent);
             }
 			if(result.equals("Avisos de la Universidad"))
             {
