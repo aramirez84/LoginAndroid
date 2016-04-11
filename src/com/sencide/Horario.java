@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.util.Xml.Encoding;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -11,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.util.EncodingUtils;
 
 
 public class Horario extends Activity
@@ -18,6 +22,9 @@ public class Horario extends Activity
 	private TextView horario;
 	private String horarioHtml=null;
 	private String user,password;
+	private String postData=null;
+	private WebView myWebView;
+	private String urlHorario="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -26,22 +33,17 @@ public class Horario extends Activity
         Bundle datos =getIntent().getExtras();
         user =datos.getString("user");
         password= datos.getString("pass");
+        
+        myWebView = (WebView) this.findViewById(R.id.webViewHorario);
+        myWebView.getSettings().setJavaScriptEnabled(true);
+        //myWebView.getSettings().setUseWideViewPort(true);
+        //myWebView.setInitialScale(70);
+        //myWebView.getSettings().setLoadWithOverviewMode(true);
+        myWebView.setWebViewClient(new WebViewClient());
+        
         Log.w("Usuario", user);
         Log.w("Password", password);
-        /*horario = (TextView)findViewById(R.id.horario);
-        //horarioHtml = getHorario();
-        horario.setText(Html.fromHtml(horarioHtml));
-        Tabla tabla = new Tabla(this, (TableLayout)findViewById(R.id.tabla));
-        tabla.agregarCabecera(R.array.cabecera_tabla);
-        for(int i = 0; i < 15; i++)
-        {
-            ArrayList<String> elementos = new ArrayList<String>();
-            elementos.add(Integer.toString(i));
-            elementos.add("Casilla [" + i + ", 0]");
-            elementos.add("Casilla [" + i + ", 1]");
-            elementos.add("Casilla [" + i + ", 2]");
-            elementos.add("Casilla [" + i + ", 3]");
-            tabla.agregarFilaTabla(elementos);
-        }*/
+        myWebView.loadUrl("https://ayamictlan.uam.mx:8443/sae/azc/aewbf001.omuestraframes?mod=1");
+        
     }
 }
