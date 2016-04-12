@@ -3,33 +3,17 @@ package com.sencide;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
-import android.util.Xml.Encoding;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TableLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EncodingUtils;
 
 
 public class Horario extends Activity
 {
-	private TextView horario;
-	private String horarioHtml=null;
 	private String user,password;
-	private String postData=null;
 	private WebView myWebView;
-	private String urlHorario="https://ayamictlan.uam.mx:8443/sae/azc/AEWBU004";
-    @Override
+	@Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -211,11 +195,6 @@ public class Horario extends Activity
 			Log.w("onPageFinished Count", count.toString());
         }
         
-        public override void OnLoadResource (WebView view, string url) // called for resources--but can't append header!
-        {
-            Console.WriteLine ("OnLoadResource: " + url);
-            base.OnLoadResource (view, url);
-        }
 
         @Override
         public void onReceivedError(WebView view, int errorCode,String description, String failingUrl) {
