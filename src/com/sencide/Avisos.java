@@ -15,19 +15,23 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TabHost;
-import android.widget.Toast;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Avisos extends Activity
 {
@@ -42,21 +46,26 @@ public class Avisos extends Activity
     private ImageView imageNoticia1,imageNoticia2;
     private TextView textNoticia1,textNoticia2;
     private Bitmap loadedImage;
-    
+    private ProgressBar pb;
+    Pattern pattern,patternDetalles,patternConsejo,patternDetallesConsejo,patternActividades,patternNoticias,patternDetalleNoticias;
+    List<String> imagenes,detalles,consejo,detallesConsejo,actividades,noticias,detallesNoticias;
+    String urlImagen=getConnection(UrlUAM);
 	@Override
     protected void onCreate(Bundle savedInstanceState)
     {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.avisos);
         
+        pb=(ProgressBar)findViewById(R.id.progressBar1);
+		pb.setVisibility(View.GONE);        
                
-        String urlImagen=getConnection(UrlUAM);
+        
                 
         /*************************	Tab 1	***************************/
-        Pattern pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.jpg|\\/coordinaciones\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.gif");
-        List<String> imagenes=getImages(pattern, urlImagen);
-        Pattern patternDetalles = Pattern.compile("\\/agenda.*div=1");
-        List<String> detalles=getImages(patternDetalles, urlImagen);
+        pattern = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.jpg|\\/coordinaciones\\/difusion\\/imagenes\\/[a-zA-Z10-9_\\s-]*.gif");
+        imagenes=getImages(pattern, urlImagen);
+        patternDetalles = Pattern.compile("\\/agenda.*div=1");
+        detalles=getImages(patternDetalles, urlImagen);
         
         imageAviso1 = (ImageView) findViewById(R.id.imageAviso1);
         imageAviso2 = (ImageView) findViewById(R.id.imageAviso2);
@@ -83,10 +92,10 @@ public class Avisos extends Activity
         imageAviso5.setImageBitmap(downloadImage(imagenes, UrlUAM,4));
         
         /*************************	Tab 2	***************************/
-        Pattern patternConsejo = Pattern.compile("<span class=\"titulohome\">[A-Z0].*");
-        Pattern patternDetallesConsejo = Pattern.compile("app\\/ca\\/docs\\/[a-z0-9_-].*\\.pdf|http:\\/\\/consejoacademico.azc.uam.mx\\/mod\\/folder\\/view\\.php.*[0-9]");
-        List<String> consejo=getImages(patternConsejo, urlImagen);
-        List<String> detallesConsejo=getImages(patternDetallesConsejo, urlImagen);
+        patternConsejo = Pattern.compile("<span class=\"titulohome\">[A-Z0].*");
+        patternDetallesConsejo = Pattern.compile("app\\/ca\\/docs\\/[a-z0-9_-].*\\.pdf|http:\\/\\/consejoacademico.azc.uam.mx\\/mod\\/folder\\/view\\.php.*[0-9]");
+        consejo=getImages(patternConsejo, urlImagen);
+        detallesConsejo=getImages(patternDetallesConsejo, urlImagen);
         
         textConsejo1=(TextView)findViewById(R.id.textViewConsejo1);
         textConsejo2=(TextView)findViewById(R.id.textViewConsejo2);
@@ -94,16 +103,11 @@ public class Avisos extends Activity
         textDetalleConsejo1=(TextView)findViewById(R.id.textViewDetalleConsejo1);
         textDetalleConsejo2=(TextView)findViewById(R.id.textViewDetalleConsejo2);
         textDetalleConsejo3=(TextView)findViewById(R.id.textViewDetalleConsejo3);
-        setConsejo(consejo, 3, textConsejo1);
-        setConsejo(consejo, 4, textConsejo2);
-        setConsejo(consejo, 5, textConsejo3);
-        setDetalle(detallesConsejo,UrlUAM+"/", 1, textDetalleConsejo1);
-        setDetalle(detallesConsejo,"", 2, textDetalleConsejo2);
-        setDetalle(detallesConsejo,UrlUAM+"/", 3, textDetalleConsejo3);
+        
         
         /*************************	Tab 3	***************************/
-        Pattern patternActividades = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[A-Z-a-z0-9-_\\s]*.jpg");
-        List<String> actividades=getImages(patternActividades, urlImagen);
+        patternActividades = Pattern.compile("\\/privado\\/difusion\\/imagenes\\/[A-Z-a-z0-9-_\\s]*.jpg");
+        actividades=getImages(patternActividades, urlImagen);
         imageAgenda1=(ImageView)findViewById(R.id.imageAgenda1);
         imageAgenda2=(ImageView)findViewById(R.id.imageAgenda2);
         imageAgenda3=(ImageView)findViewById(R.id.imageAgenda3);
@@ -113,29 +117,15 @@ public class Avisos extends Activity
         textAgenda3=(TextView)findViewById(R.id.textViewAgenda3);
         textAgenda4=(TextView)findViewById(R.id.textViewAgenda4);
         
-        imageAgenda1.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-4));
-        imageAgenda2.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-3));
-        imageAgenda3.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-2));
-        imageAgenda4.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-1));
-        setDetalle(detalles, UrlUAM, actividades.size()-4, textAgenda1);
-        setDetalle(detalles, UrlUAM, actividades.size()-3, textAgenda2);
-        setDetalle(detalles, UrlUAM, actividades.size()-2, textAgenda3);
-        setDetalle(detalles, UrlUAM, actividades.size()-1, textAgenda4);
+        
         
         /*************************	Tab 4	***************************/
-        Pattern patternNoticias = Pattern.compile("\\/privado\\/noticias\\/imagenes\\/[a-z0-9_A-Z-\\s]*\\.(jpg|gif)");
-        Pattern patternDetalleNoticias = Pattern.compile("\\/noticias\\.php\\?id=[a-z0-9\\&;=]*");
-        List<String> noticias=getImages(patternNoticias, urlImagen);
-        List<String> detallesNoticias=getImages(patternDetalleNoticias, urlImagen);
-        
+        patternNoticias = Pattern.compile("\\/privado\\/noticias\\/imagenes\\/[a-z0-9_A-Z-\\s]*\\.(jpg|gif)");
+        patternDetalleNoticias = Pattern.compile("\\/noticias\\.php\\?id=[a-z0-9\\&;=]*");
         imageNoticia1=(ImageView)findViewById(R.id.imageNoticia1);
         imageNoticia2=(ImageView)findViewById(R.id.imageNoticia2);
         textNoticia1=(TextView)findViewById(R.id.textViewNoticia1);
         textNoticia2=(TextView)findViewById(R.id.textViewNoticia2);
-        imageNoticia1.setImageBitmap(downloadImage(noticias, UrlUAM,0));
-        imageNoticia2.setImageBitmap(downloadImage(noticias, UrlUAM,1));
-        setDetalle(detallesNoticias, UrlUAM, 0, textNoticia1);
-        setDetalle(detallesNoticias, UrlUAM, 1, textNoticia2);
         
         Resources res = getResources();
         
@@ -160,7 +150,7 @@ public class Avisos extends Activity
         		res.getDrawable(android.R.drawable.ic_dialog_map));
         tabs.addTab(spec);
         
-        spec=tabs.newTabSpec("mitab3");
+        spec=tabs.newTabSpec("mitab4");
         spec.setContent(R.id.Divisiones);
         spec.setIndicator("Divisiones", 
         		res.getDrawable(android.R.drawable.ic_dialog_map));
@@ -175,14 +165,26 @@ public class Avisos extends Activity
         		if(tabId=="mitab2")
         		{
         			Log.i("AndroidTabsDemo", "Pulsada pestaña: " + tabId);
+        			Toast.makeText(getApplicationContext(), "Consejos Academicos....", Toast.LENGTH_SHORT).show();
+        			pb.setVisibility(View.VISIBLE);
+        			new MyAsyncTask().execute(tabId);
+        			
         		}
         		if(tabId=="mitab3")
         		{
         			Log.i("AndroidTabsDemo", "Pulsada pestaña: " + tabId);
+        			Toast.makeText(getApplicationContext(), "Actividades Academicas....", Toast.LENGTH_SHORT).show();
+        			pb.setVisibility(View.VISIBLE);
+        			new MyAsyncTask().execute(tabId);
+        			
         		}
         		if(tabId=="mitab4")
         		{
         			Log.i("AndroidTabsDemo", "Pulsada pestaña: " + tabId);
+        			Toast.makeText(getApplicationContext(), "Divisiones Academicas....", Toast.LENGTH_SHORT).show();
+        			pb.setVisibility(View.VISIBLE);
+        			new MyAsyncTask().execute(tabId);
+        			
         		}
 			}
 		});        
@@ -257,5 +259,55 @@ public class Avisos extends Activity
 		newText=newText.replace("<br>","");
 		text.setText(newText);
 	}
+	private class MyAsyncTask extends AsyncTask<String, Void, String>
+	{
+		
+		 
+		@Override
+		protected String doInBackground(String... params)
+		{
+			String resultButton=null;
+			resultButton=params[0];
+			return resultButton;
+			
+		}
+ 
+		protected void onPostExecute(String result)
+		{
+			pb.setVisibility(View.GONE);
+			if(result.equals("mitab2"))
+            {
+				setConsejo(consejo, 3, textConsejo1);
+		        setConsejo(consejo, 4, textConsejo2);
+		        setConsejo(consejo, 5, textConsejo3);
+		        setDetalle(detallesConsejo,UrlUAM+"/", 1, textDetalleConsejo1);
+		        setDetalle(detallesConsejo,"", 2, textDetalleConsejo2);
+		        setDetalle(detallesConsejo,UrlUAM+"/", 3, textDetalleConsejo3);
+            }
+			if(result.equals("mitab3"))
+            {
+				imageAgenda1.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-4));
+		        imageAgenda2.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-3));
+		        imageAgenda3.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-2));
+		        imageAgenda4.setImageBitmap(downloadImage(actividades, UrlUAM,actividades.size()-1));
+		        setDetalle(detalles, UrlUAM, actividades.size()-4, textAgenda1);
+		        setDetalle(detalles, UrlUAM, actividades.size()-3, textAgenda2);
+		        setDetalle(detalles, UrlUAM, actividades.size()-2, textAgenda3);
+		        setDetalle(detalles, UrlUAM, actividades.size()-1, textAgenda4);
+            }
+			if(result.equals("mitab4"))
+            {
+				noticias=getImages(patternNoticias, urlImagen);
+		        detallesNoticias=getImages(patternDetalleNoticias, urlImagen);
+				imageNoticia1.setImageBitmap(downloadImage(noticias, UrlUAM,0));
+		        imageNoticia2.setImageBitmap(downloadImage(noticias, UrlUAM,1));
+		        setDetalle(detallesNoticias, UrlUAM, 0, textNoticia1);
+		        setDetalle(detallesNoticias, UrlUAM, 1, textNoticia2);
+            }
+		}
+		
+ 
+	}
+
 
 }
