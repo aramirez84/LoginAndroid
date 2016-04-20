@@ -37,7 +37,6 @@ public class Horario extends Activity
 				
 		@Override
         public boolean shouldOverrideUrlLoading(WebView mywebview, String url) {
-			Toast.makeText(getApplicationContext(), "Cargando: "+url, Toast.LENGTH_SHORT).show();
 					
 			mywebview.loadUrl("javascript:(function() { " +
                     "window.frames['bodyFrame'].window.frames['controlFrame'].window.frames['menuFrame'].document.getElementsByName('NOMBRE.IDENTIFICACION.NONMODELED')[0].value='"+user+"' })()");
@@ -92,7 +91,6 @@ public class Horario extends Activity
         @Override
         public void onPageStarted(WebView mywebview, String url, Bitmap favicon) {
             super.onPageStarted(mywebview, url, favicon);
-            Toast.makeText(getApplicationContext(), "Iniciando: "+url, Toast.LENGTH_SHORT).show();
             
             mywebview.loadUrl("javascript:(function() { " +
                     "window.frames['bodyFrame'].window.frames['controlFrame'].window.frames['menuFrame'].document.getElementsByName('NOMBRE.IDENTIFICACION.NONMODELED')[0].value='"+user+"' })()");
@@ -145,7 +143,6 @@ public class Horario extends Activity
         @Override
         public void onPageFinished(WebView mywebview, String url) {
             super.onPageFinished(mywebview, url);
-            Toast.makeText(getApplicationContext(), "Finalizando: "+url, Toast.LENGTH_SHORT).show();
             
             mywebview.loadUrl("javascript:(function() { " +
                     "window.frames['bodyFrame'].window.frames['controlFrame'].window.frames['menuFrame'].document.getElementsByName('NOMBRE.IDENTIFICACION.NONMODELED')[0].value='"+user+"' })()");
