@@ -152,6 +152,7 @@ public class MenuApplication extends Activity implements OnClickListener{
 			if(result.equals("Biblioteca"))
             {
             	Intent intent = new Intent(MenuApplication.this, BibliotecaLogin.class);
+            	intent.putExtra("user",user);
             	startActivity(intent);
             }
 		}
