@@ -46,7 +46,7 @@ public class Avisos extends Activity
     private ImageView imageNoticia1,imageNoticia2;
     private TextView textNoticia1,textNoticia2;
     private Bitmap loadedImage;
-    private ProgressBar pb;
+    //private ProgressBar pb;
     Pattern pattern,patternDetalles,patternConsejo,patternDetallesConsejo,patternActividades,patternNoticias,patternDetalleNoticias;
     List<String> imagenes,detalles,consejo,detallesConsejo,actividades,noticias,detallesNoticias;
     String urlImagen=getConnection(UrlUAM);
@@ -56,8 +56,8 @@ public class Avisos extends Activity
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.avisos);
         
-        pb=(ProgressBar)findViewById(R.id.progressBar1);
-		pb.setVisibility(View.GONE);        
+        //pb=(ProgressBar)findViewById(R.id.progressBar1);
+		//pb.setVisibility(View.GONE);        
                
         
                 
@@ -166,7 +166,7 @@ public class Avisos extends Activity
         		{
         			Log.i("AndroidTabsDemo", "Pulsada pestaña: " + tabId);
         			Toast.makeText(getApplicationContext(), "Consejos Academicos....", Toast.LENGTH_SHORT).show();
-        			pb.setVisibility(View.VISIBLE);
+        			//pb.setVisibility(View.VISIBLE);
         			new MyAsyncTask().execute(tabId);
         			
         		}
@@ -174,7 +174,7 @@ public class Avisos extends Activity
         		{
         			Log.i("AndroidTabsDemo", "Pulsada pestaña: " + tabId);
         			Toast.makeText(getApplicationContext(), "Actividades Academicas....", Toast.LENGTH_SHORT).show();
-        			pb.setVisibility(View.VISIBLE);
+        			//pb.setVisibility(View.VISIBLE);
         			new MyAsyncTask().execute(tabId);
         			
         		}
@@ -182,7 +182,7 @@ public class Avisos extends Activity
         		{
         			Log.i("AndroidTabsDemo", "Pulsada pestaña: " + tabId);
         			Toast.makeText(getApplicationContext(), "Divisiones Academicas....", Toast.LENGTH_SHORT).show();
-        			pb.setVisibility(View.VISIBLE);
+        			//pb.setVisibility(View.VISIBLE);
         			new MyAsyncTask().execute(tabId);
         			
         		}
@@ -231,12 +231,15 @@ public class Avisos extends Activity
 		URL imageUrl = null;
 	    try
 	    {
+	    	BitmapFactory.Options options =new BitmapFactory.Options();
+	    	options.inSampleSize = 3;
+	    	
 	    	imageHttpAddress = "";
 	    	imageHttpAddress=url+imagenes.get(index).replace(" ","%20").replace("class=\"detalle\">Ver detalle>", "");
 	    	imageUrl = new URL(imageHttpAddress);
 	    	HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
 	    	conn.connect();
-	    	loadedImage=(BitmapFactory.decodeStream(conn.getInputStream()));
+	    	loadedImage=(BitmapFactory.decodeStream(conn.getInputStream(),null,options));
 	   	}
 	    catch (IOException e)
 	    {
@@ -274,7 +277,7 @@ public class Avisos extends Activity
  
 		protected void onPostExecute(String result)
 		{
-			pb.setVisibility(View.GONE);
+			//pb.setVisibility(View.GONE);
 			if(result.equals("mitab2"))
             {
 				setConsejo(consejo, 3, textConsejo1);
