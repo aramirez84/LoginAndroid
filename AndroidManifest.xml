@@ -14,9 +14,17 @@
             </intent-filter>
         </activity>
         <activity android:name="MenuApplication"></activity>
-        <activity android:name="Horario"></activity>
-        <activity android:name="Avisos"></activity>
+        <activity 
+            android:name="Horario"
+            android:configChanges="keyboardHidden|orientation"
+            ></activity>
+        <activity android:name="Avisos"
+            android:configChanges="keyboardHidden|orientation"
+            ></activity>
         <activity android:name="ShowAvisos"></activity>
-        <activity android:name="BibliotecaLogin"></activity>
+        <activity 
+            android:name="BibliotecaLogin"
+            android:configChanges="keyboardHidden|orientation"
+            ></activity>
     </application>
 </manifest>
